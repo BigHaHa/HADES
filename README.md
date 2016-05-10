@@ -1,5 +1,5 @@
 # HADES
-simple example of analysis
+Collective flow analysis.
 
 flowCount.C - is the main executing program. It should be compiled via ROOT with HYDRA on it.
 
