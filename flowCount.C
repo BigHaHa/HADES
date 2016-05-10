@@ -378,7 +378,7 @@ Int_t flowCount(TString inputlist, TString outfile, Int_t nev=-1)
         vsum      /= wmod;
         for (Int_t im=0;im<11;im++){
             if((Mtof+Mrpc)>=Mrang[im] && (Mtof+Mrpc)<Mrang[im+1]){
-                vsumCorr.Set((vsum.X()-sumXmean[im][DAY_NUM-96])/sumXsigma[im][DAY_NUM-96],(vsum.Y()-sumYmean[im][DAY_NUM-96])/sumYsigma[im][DAY_NUM-96]);
+                vsumCorr = cellsVect.Recenter(cellNum,sumXmean[im][DAY_NUM-96],sumYmean[im][DAY_NUM-96],sumXsigma[im][DAY_NUM-96],sumYsigma[im][DAY_NUM-96]);
             }
         }
         VectphiEP =  vsum.DeltaPhi(eX)    *rad2deg;
@@ -453,14 +453,13 @@ Int_t flowCount(TString inputlist, TString outfile, Int_t nev=-1)
                 if((Mtof+Mrpc)>=Mrang[im] && (Mtof+Mrpc)<Mrang[im+1]){
                     dPsi = 0.;
                     for (Int_t n=0;n<6;n++){
-                        avSin = FlatSin[n][im][DAY_NUM-96]; avCos = FlatCos[n][im][DAY_NUM-96];
-                        //avSin = AvSin[1][n][im];            avCos = AvCos[1][n][im];
-                        dPsi += 2*(-avSin*cos((n+1)*VectphiCorrR) + avCos*sin((n+1)*VectphiCorrR))/(n+1);
+                        cellsVect.SetFlatt(n,FlatSin[n][im][DAY_NUM-96],FlatCos[n][im][DAY_NUM-96]);
                     }
-                    hdPsi[im]->Fill(dPsi*rad2deg);
-                    PsiCorr = atan2(sin(VectphiCorrR+dPsi),cos(VectphiCorrR+dPsi))*rad2deg;
-                    PsiCorr2 = VectphiCorr + dPsi;
-                    hFlatDiff[im]->Fill(PsiCorr/PsiCorr2);
+                    PsiCorr = cellsVect.Flattening(VectphiCorr);
+                    //hdPsi[im]->Fill(dPsi*rad2deg);
+                    //PsiCorr = atan2(sin(VectphiCorrR+dPsi),cos(VectphiCorrR+dPsi))*rad2deg;
+                    //PsiCorr2 = VectphiCorr + dPsi;
+                    //hFlatDiff[im]->Fill(PsiCorr/PsiCorr2);
                     if (PsiCorr > 180. ) PsiCorr-=180.;
                     if (PsiCorr < -180.) PsiCorr+=180.;
                     hPsiEP[im]->Fill(VectphiEP); hPsiRcnt[im]->Fill(VectphiCorr); hPsiCorr[im]->Fill(PsiCorr);

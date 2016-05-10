@@ -614,11 +614,38 @@ class HWallFiredCellsVA{
     }
 
     Int_t GetNumbOfCells(){return nCells;}
+
+    TVector2 Recenter(Int_t cellNum, Float_t Qx, Float_t Qy, Float_t Sx, Float_t Sy){
+      v.Set((vCells[cellNum].X()-Qx)/Sx,(vCells[cellNum].Y()-Qy)/Sy);
+      return v;
+    }
+
+    void SetFlatt(Int_t n, Float_t sin_in, Float_t cos_in){
+      avSin[n] = sin_in;
+      avCos[n] = cos_in;
+    }
+
+    Float_t Flattening(Float_t Psi){
+      dPsi = 0;
+      Psi  *= TMath::Pi()/180.;
+      for (Int_t n=0;n<6;n++){
+        dPsi += 2*(-avSin[n]*cos((n+1)*Psi) + avCos[n]*sin((n+1)*Psi))/(n+1);
+      }
+      return atan2(sin(Psi+dPsi),cos(Psi+dPsi))*57.2957795130823229;
+    }
+
+    Float_t GetdPsi(){
+      return dPsi;
+    }
     
   protected:
     Int_t    nCells;
     TVector2 vCells[304]; //-vector-------//
     Float_t  eCells[304]; //-energy-dE/dx-//
+    Float_t avSin[6];
+    Float_t avCos[6];
+    TVector2 v;
+    Float_t dPsi;
 };
 
 class FFlow{
