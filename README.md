@@ -7,7 +7,7 @@ flowHisto.C - is the initialization of all histograms that are needed for flowCo
 
 flowVar.C - is the initialization of all variables that are needed for flowCount.C macro to prevent bad_alloc().
 
-Get* (GetRecenter.C, GetFlatSinCos.C, ...) - macros that generates calibration "*.cc" files for flowCount.C.
+Get* (GetRecenter.C, GetFlatSinCos.C, ...) - macros that generate calibration "*.cc" files for flowCount.C.
 
 GetFourier.C - plot EP angle distribution and its Fourier cosine coefficients (till 6 harmonic).
 
