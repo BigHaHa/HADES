@@ -378,7 +378,7 @@ Int_t flowCount(TString inputlist, TString outfile, Int_t nev=-1)
         vsum      /= wmod;
         for (Int_t im=0;im<11;im++){
             if((Mtof+Mrpc)>=Mrang[im] && (Mtof+Mrpc)<Mrang[im+1]){
-                vsumCorr = cellsVect.Recenter(cellNum,sumXmean[im][DAY_NUM-96],sumYmean[im][DAY_NUM-96],sumXsigma[im][DAY_NUM-96],sumYsigma[im][DAY_NUM-96]);
+                vsumCorr = cellsVect.Recenter(vsum,sumXmean[im][DAY_NUM-96],sumYmean[im][DAY_NUM-96],sumXsigma[im][DAY_NUM-96],sumYsigma[im][DAY_NUM-96]);
             }
         }
         VectphiEP =  vsum.DeltaPhi(eX)    *rad2deg;
