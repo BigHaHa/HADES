@@ -44,58 +44,42 @@ TH1D* h0PhiA         = new TH1D("h0PhiA" ,"Nfw>=2: EP phi A 1/2-subevent"       
 TH1D* h0PhiB         = new TH1D("h0PhiB" ,"Nfw>=2: EP phi B 1/2-subevent"       , 400, -200., 200.);
 TH1D* h0PhiAB        = new TH1D("h0PhiAB","Nfw>=2: EP phi(A^B) of subevents"    , 400, -200., 200.);
 TH1F *hRPA           = new TH1F("hRPA" ,"RP angle"                           , 90., -380., 380);
-TF1  *fRPAy[ 11];
-TH1F *hRPAy[ 11];
-TH1F *hRPAyc[11];
-TH1F *hORPAy[ 11];
-TH1F *hORPAyc[11];
-TH1F* hWEPy[11];
-TH1F* hOWEPy[11];
-TProfile* hSinPsi[6][11];
-TProfile* hCosPsi[6][11];
-TH2F* hSinFOPI[6][11];
-TH2F* hCosFOPI[6][11];
-TH1F* hPsiEP[   11];
-TH1F* hPsiRcnt[ 11];
-TH1F* hPsiCorr[ 11];
-TH1F* hOPsiCorr[11];
-TProfile* hsumXmean[11];
-TProfile* hsumYmean[11];
-TH1F* hQvectX[  11];
-TH1F* hQvectY[  11];
-TH1F* hQvXrec[  11];
-TH1F* hQvYrec[  11];
-TH2F* hQvRaw[11];
-TH2F* hQvRec[11];
-TH1F* hdPsi[11];
-for(Int_t i=0;i<11;i++){
-    //---angular-weight-correction-function--[cos1A+cos2A+sin1A +cos3A + sin2A ]-----------------
-    fRPAy[i]  = new TF1( Form("fRPAy%i",i)  ,  "( 1.+2.*[0]*TMath::Cos(x[0]*3.1415926535/180.)+2.*[1]*TMath::Cos(2.*x[0]*3.1415926535/180.)+2.*[2]*TMath::Cos(3.*x[0]*3.1415926535/180.)+2.*[3]*TMath::Cos(4.*x[0]*3.1415926535/180.) + [4]*TMath::Sin(x[0]*3.1415/180.) + [5]*TMath::Sin(2.*x[0]*3.1415/180.) )", -180., 180.);
-    //--histograms-for-angular-weighting-correction--(before-correction)-------------------------
-    hRPAy[i]  = new TH1F(Form("hRPAy%i",i)  ,Form("hRPAy %i range"            ,i) , 90, -180., 180);
-    //--histograms-for-angular-weighting-correction-(after-correction)---------------------------
-    hRPAyc[i] = new TH1F(Form("hRPAc%ic",i) ,Form("hRPAyc %i range_after_corr",i) , 90, -180., 180);
-    hORPAy[i] = new TH1F(Form("hORPAy%i",i) ,Form("hORPAy %i range"            ,i), 90, -180., 180.);
-    hORPAyc[i]= new TH1F(Form("hORPAc%ic",i),Form("hORPAyc %i range_after_corr",i), 90, -180., 180.);
-    hWEPy[i]  = new TH1F(Form("hWEPy%i",i)   ,Form("hWEP %i META",i)              , 90, -180., 180.); //hWEPy[ i]->Sumw2();
-    hOWEPy[i] = new TH1F(Form("hOWEPy%i",i)  ,Form("hOWEP %i MDC",i)              , 90, -180., 180.); //hOWEPy[i]->Sumw2();
-    hsumXmean[i] = new TProfile(Form("hsumXmean%i",i),Form("hsumXmean %i",i),15,95.,110.);
-    hsumYmean[i] = new TProfile(Form("hsumYmean%i",i),Form("hsumYmean %i",i),15,95.,110.);
-    for (Int_t n=0;n<6;n++){
-    	hSinPsi[n][i] = new TProfile(Form("hSinPsi%i%i",n,i),Form("hSinPsi %i %i",n,i),15,95.,110.);
-        hCosPsi[n][i] = new TProfile(Form("hCosPsi%i%i",n,i),Form("hCosPsi %i %i",n,i),15,95.,110.);
+
+TProfile* hSinPsi[3][6][11];
+TProfile* hCosPsi[3][6][11];
+TH1F* hPsiEP[  3][ 11];
+TH1F* hPsiRcnt[3][ 11];
+TH1F* hPsiCorr[3][ 11];
+TH1F* hOPsiCorr[3][11];
+TProfile* hsumXmean[3][11];
+TProfile* hsumYmean[3][11];
+TH1F* hQvectX[3][  11];
+TH1F* hQvectY[3][  11];
+TH1F* hQvXrec[3][  11];
+TH1F* hQvYrec[3][  11];
+TH2F* hQvRaw[ 3][  11];
+TH2F* hQvRec[ 3][  11];
+TH1F* hdPsi[  3][  11];
+for (Int_t iT=0;iT<3;iT++){
+    for(Int_t i=0;i<11;i++){
+        hsumXmean[iT][i] = new TProfile(Form("hsumXmean%i%i",iT,i),Form("hsumXmean %i %i",iT,i),15,95.,110.);
+        hsumYmean[iT][i] = new TProfile(Form("hsumYmean%i%i",iT,i),Form("hsumYmean %i %i",iT,i),15,95.,110.);
+        for (Int_t n=0;n<6;n++){
+    	    hSinPsi[iT][n][i] = new TProfile(Form("hSinPsi%i%i%i",iT,n,i),Form("hSinPsi %i %i %i",iT,n,i),15,95.,110.);
+            hCosPsi[iT][n][i] = new TProfile(Form("hCosPsi%i%i%i",iT,n,i),Form("hCosPsi %i %i %i",iT,n,i),15,95.,110.);
+        }
+        hPsiEP[   iT][i] = new TH1F(Form("hPsiEP%i%i"   ,iT,i),Form("hPsiEP %i %i "   ,iT,i), 90, -180., 180.);
+        hPsiRcnt[ iT][i] = new TH1F(Form("hPsiRcnt%i%i" ,iT,i),Form("hPsiRcnt %i %i after_recentering" ,iT,i), 90, -180., 180.);
+        hPsiCorr[ iT][i] = new TH1F(Form("hPsiCorr%i%i" ,iT,i),Form("hPsiCorr %i %i after_flattering" ,iT,i), 90, -180., 180.);
+        hdPsi[    iT][i] = new TH1F(Form("hdPsi%i%i" ,iT,i),Form("hdPsi %i %i after_flattering" ,iT,i), 100, -5., 5.);
+        hOPsiCorr[iT][i] = new TH1F(Form("hOPsiCorr%i%i",iT,i),Form("hOPsiCorr %i %i after_corr",iT,i), 90, -180., 180.);
+        hQvectX[  iT][i] = new TH1F(Form("hQvectX%i%i",iT,i),Form("hQvectX %i %i FW",iT,i), 600, -5., 5.);
+        hQvectY[  iT][i] = new TH1F(Form("hQvectY%i%i",iT,i),Form("hQvectY %i %i FW",iT,i), 600, -5., 5.); 
+        hQvXrec[  iT][i] = new TH1F(Form("hQvXrec%i%i",iT,i),Form("hQvXrec %i %i FW",iT,i), 600, -50., 50.);
+        hQvYrec[  iT][i] = new TH1F(Form("hQvYrec%i%i",iT,i),Form("hQvYrec %i %i FW",iT,i), 600, -50., 50.);
+        hQvRaw[   iT][i] = new TH2F(Form("hQvRaw%i%i",iT,i) ,Form("Qvect %i %i Raw",iT,i), 1000, -5., 5., 1000, -5., 5.);
+        hQvRec[   iT][i] = new TH2F(Form("hQvRec%i%i",iT,i) ,Form("Qvect %i %i Rec",iT,i), 1000, -50., 50., 1000, -50., 50.);
     }
-    hPsiEP[   i] = new TH1F(Form("hPsiEP%i"   ,i),Form("hPsiEP %i "   ,i), 90, -180., 180.);
-    hPsiRcnt[ i] = new TH1F(Form("hPsiRcnt%i" ,i),Form("hPsiRcnt %i after_recentering" ,i), 90, -180., 180.);
-    hPsiCorr[ i] = new TH1F(Form("hPsiCorr%i" ,i),Form("hPsiCorr %i after_flattering" ,i), 90, -180., 180.);
-    hdPsi[    i] = new TH1F(Form("hdPsi%i" ,i),Form("hdPsi %i after_flattering" ,i), 100, -5., 5.);
-    hOPsiCorr[i] = new TH1F(Form("hOPsiCorr%i",i),Form("hOPsiCorr %i after_corr",i), 90, -180., 180.);
-    hQvectX[  i] = new TH1F(Form("hQvectX%i",i),Form("hQvectX %i FW",i), 600, -0.05, 0.05);
-    hQvectY[  i] = new TH1F(Form("hQvectY%i",i),Form("hQvectY %i FW",i), 600, -0.05, 0.05); 
-    hQvXrec[  i] = new TH1F(Form("hQvXrec%i",i),Form("hQvXrec %i FW",i), 600, -5., 5.);
-    hQvYrec[  i] = new TH1F(Form("hQvYrec%i",i),Form("hQvYrec %i FW",i), 600, -5., 5.);
-    hQvRaw[   i] = new TH2F(Form("hQvRaw%i",i) ,Form("Qvect %i Raw",i), 1000, -0.05, 0.05, 1000, -0.05, 0.05);
-    hQvRec[   i] = new TH2F(Form("hQvRec%i",i) ,Form("Qvect %i Rec",i), 1000, -5., 5., 1000, -5., 5.);
 }
  
 TH1F *hRPA6Ywc  = new TH1F("hRPA6Ywc","RP angle after corr in 6 b range", 90., -180., 180); //-after-weight-correction-in-6-y-slices--

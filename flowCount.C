@@ -165,7 +165,7 @@ Int_t flowCount(TString inputlist, TString outfile, Int_t nev=-1)
             //#include "/u/parfenov/anaflow/FOPICorPar.cc"
             #include "/u/parfenov/anaflow/Recenter.cc"
             #include "/u/parfenov/anaflow/RecenterFW.cc" //recenter FW;
-            #include "/u/parfenov/anaflow/FlatFourier.cc"//for flattening Psi_EP via fit;
+            //#include "/u/parfenov/anaflow/FlatFourier.cc"//for flattening Psi_EP via fit;
             //--Now-we-read-multiplicity-parameters-for-this-beXXXXXXXXXX-file--------------------//
             mulVal = cCorr.getLineValuesAsVectFromCalibFile( currBeName );
             cout<<"mulVal "<< mulVal[0] <<" "<< mulVal[1] <<" "<< mulVal[2] <<" "<< mulVal[3] <<endl;
@@ -277,12 +277,18 @@ Int_t flowCount(TString inputlist, TString outfile, Int_t nev=-1)
         vect.Set(0.,0.);
         vsum.Set(0.,0.);
         vsumCorr.Set(0.,0.);
+        vsumCorrA.Set(0.,0.);
+        vsumCorrB.Set(0.,0.);
         eX  .Set(1.,0.);
         dEdxCut=0.0;
         xyRadius=0.0;
         phiA   = -1000;
         phiB   = -1000;
         phiAB  = -1000;
+        phiCorA= -1000;
+        phiCorB= -1000;
+        PsiA   = -1000;
+        PsiB   = -1000;
         cellsVect.Reset();
       
         //-weight-for-scalar-product-method-------------------
@@ -358,7 +364,7 @@ Int_t flowCount(TString inputlist, TString outfile, Int_t nev=-1)
                         }
                     }*/
                     vect.Set(wallX, wallY);
-                    vect.Unit();
+                    vect = vect.Unit();
                     vect *= cellCharge;
                     wmod += cellCharge;
                     vsum += vect;
@@ -378,7 +384,7 @@ Int_t flowCount(TString inputlist, TString outfile, Int_t nev=-1)
         vsum      /= wmod;
         for (Int_t im=0;im<11;im++){
             if((Mtof+Mrpc)>=Mrang[im] && (Mtof+Mrpc)<Mrang[im+1]){
-                vsumCorr = cellsVect.Recenter(vsum,sumXmean[im][DAY_NUM-96],sumYmean[im][DAY_NUM-96],sumXsigma[im][DAY_NUM-96],sumYsigma[im][DAY_NUM-96]);
+                vsumCorr = cellsVect.Recenter(vsum,sumXmean[0][im][DAY_NUM-96],sumYmean[0][im][DAY_NUM-96],sumXsigma[0][im][DAY_NUM-96],sumYsigma[0][im][DAY_NUM-96]);
             }
         }
         VectphiEP =  vsum.DeltaPhi(eX)    *rad2deg;
@@ -429,23 +435,35 @@ Int_t flowCount(TString inputlist, TString outfile, Int_t nev=-1)
         //-calculating-eventplane-angles---------------
         vsumA /= wmodA;
         vsumB /= wmodB;
+        for (Int_t im=0;im<11;im++){
+            if((Mtof+Mrpc)>=Mrang[im] && (Mtof+Mrpc)<Mrang[im+1]){
+                vsumCorrA = cellsVect.Recenter(vsumA,sumXmean[1][im][DAY_NUM-96],sumYmean[1][im][DAY_NUM-96],sumXsigma[1][im][DAY_NUM-96],sumYsigma[1][im][DAY_NUM-96]);
+                vsumCorrB = cellsVect.Recenter(vsumB,sumXmean[2][im][DAY_NUM-96],sumYmean[2][im][DAY_NUM-96],sumXsigma[2][im][DAY_NUM-96],sumYsigma[2][im][DAY_NUM-96]);
+            }
+        }
         phiA   = vsumA.DeltaPhi(eX)       *rad2deg;
         phiB   = vsumB.DeltaPhi(eX)       *rad2deg;
         phiAB  = vsumA.DeltaPhi(vsumB)    *rad2deg;
+        phiCorA=vsumCorrA.DeltaPhi(eX)    *rad2deg;
+        phiCorB=vsumCorrB.DeltaPhi(eX)    *rad2deg;
         Mfw = NA+NB;
         if (Mfw > 3 && NA>1 && NB>1){
             for (Int_t im=0;im<11;im++){
                 if((Mtof+Mrpc)>=Mrang[im] && (Mtof+Mrpc)<Mrang[im+1]){
-                    hQvectX[im]->Fill(vsum.X());          hQvectY[im]->Fill(vsum.Y());
-                    hQvXrec[im]->Fill(vsumCorr.X());      hQvYrec[im]->Fill(vsumCorr.Y());
-                    hQvRaw[ im]->Fill(vsum.X(),vsum.Y()); hQvRec[ im]->Fill(vsumCorr.X(),vsumCorr.Y());
+                    hQvectX[0][im]->Fill(vsum.X());          hQvectY[0][im]->Fill(vsum.Y());
+                    hQvXrec[0][im]->Fill(vsumCorr.X());      hQvYrec[0][im]->Fill(vsumCorr.Y());
+                    hQvRaw[0][ im]->Fill(vsum.X(),vsum.Y()); hQvRec[0][ im]->Fill(vsumCorr.X(),vsumCorr.Y());
                 }
             }
             for (Int_t n=1;n<=6;n++){
                 for (Int_t im=0;im<11;im++){
                     if ((Mtof+Mrpc)>=Mrang[im] && (Mtof+Mrpc)<Mrang[im+1]){
-                        hSinPsi[n-1][im]->Fill(DAY_NUM,sin(n*VectphiCorrR),1);
-                        hCosPsi[n-1][im]->Fill(DAY_NUM,cos(n*VectphiCorrR),1);
+                        hSinPsi[0][n-1][im]->Fill(DAY_NUM,sin(n*VectphiCorrR),1);
+                        hCosPsi[0][n-1][im]->Fill(DAY_NUM,cos(n*VectphiCorrR),1);
+                        hSinPsi[1][n-1][im]->Fill(DAY_NUM,sin(n*phiCorA*hpi/90.),1);
+                        hCosPsi[1][n-1][im]->Fill(DAY_NUM,cos(n*phiCorA*hpi/90.),1);
+                        hSinPsi[2][n-1][im]->Fill(DAY_NUM,sin(n*phiCorB*hpi/90.),1);
+                        hCosPsi[2][n-1][im]->Fill(DAY_NUM,cos(n*phiCorB*hpi/90.),1);
                     }
                 }
             }
@@ -453,7 +471,7 @@ Int_t flowCount(TString inputlist, TString outfile, Int_t nev=-1)
                 if((Mtof+Mrpc)>=Mrang[im] && (Mtof+Mrpc)<Mrang[im+1]){
                     dPsi = 0.;
                     for (Int_t n=0;n<6;n++){
-                        cellsVect.SetFlatt(n,FlatSin[n][im][DAY_NUM-96],FlatCos[n][im][DAY_NUM-96]);
+                        cellsVect.SetFlatt(n,FlatSin[0][n][im][DAY_NUM-96],FlatCos[0][n][im][DAY_NUM-96]);
                     }
                     PsiCorr = cellsVect.Flattening(VectphiCorr);
                     //hdPsi[im]->Fill(dPsi*rad2deg);
@@ -462,14 +480,42 @@ Int_t flowCount(TString inputlist, TString outfile, Int_t nev=-1)
                     //hFlatDiff[im]->Fill(PsiCorr/PsiCorr2);
                     if (PsiCorr > 180. ) PsiCorr-=180.;
                     if (PsiCorr < -180.) PsiCorr+=180.;
-                    hPsiEP[im]->Fill(VectphiEP); hPsiRcnt[im]->Fill(VectphiCorr); hPsiCorr[im]->Fill(PsiCorr);
+                    hPsiEP[0][im]->Fill(VectphiEP); hPsiRcnt[0][im]->Fill(VectphiCorr); hPsiCorr[0][im]->Fill(PsiCorr);
 
-                    hsumXmean[im]->Fill(DAY_NUM,vsum.X(),1); 
-                    hsumYmean[im]->Fill(DAY_NUM,vsum.Y(),1); 
+                    hsumXmean[0][im]->Fill(DAY_NUM,vsum.X(),1); 
+                    hsumYmean[0][im]->Fill(DAY_NUM,vsum.Y(),1); 
                     hQvsM_X->Fill(Mtof+Mrpc,vsum.X()); 
                     hQvsM_Y->Fill(Mtof+Mrpc,vsum.Y()); 
                     hQvFW_X->Fill(nFWspect,vsum.X()); 
                     hQvFW_Y->Fill(nFWspect,vsum.Y()); 
+                }
+            }
+            for (Int_t im=0;im<11;im++){
+                if((Mtof+Mrpc)>=Mrang[im] && (Mtof+Mrpc)<Mrang[im+1]){
+                    for (Int_t n=0;n<6;n++){
+                        cellsVect.SetFlatt(n,FlatSin[1][n][im][DAY_NUM-96],FlatCos[1][n][im][DAY_NUM-96]);
+                    }
+                    PsiA = cellsVect.Flattening(phiCorA);
+                    if (PsiA > 180. ) PsiA-=180.;
+                    if (PsiA < -180.) PsiA+=180.;
+                    hPsiEP[1][im]->Fill(phiA); hPsiRcnt[1][im]->Fill(phiCorA); hPsiCorr[1][im]->Fill(PsiA);
+
+                    hsumXmean[1][im]->Fill(DAY_NUM,vsumA.X(),1); 
+                    hsumYmean[1][im]->Fill(DAY_NUM,vsumA.Y(),1); 
+                }
+            }
+            for (Int_t im=0;im<11;im++){
+                if((Mtof+Mrpc)>=Mrang[im] && (Mtof+Mrpc)<Mrang[im+1]){
+                    for (Int_t n=0;n<6;n++){
+                        cellsVect.SetFlatt(n,FlatSin[2][n][im][DAY_NUM-96],FlatCos[2][n][im][DAY_NUM-96]);
+                    }
+                    PsiB = cellsVect.Flattening(phiCorB);
+                    if (PsiB > 180. ) PsiB-=180.;
+                    if (PsiB < -180.) PsiB+=180.;
+                    hPsiEP[2][im]->Fill(phiA); hPsiRcnt[2][im]->Fill(phiCorA); hPsiCorr[2][im]->Fill(PsiB);
+
+                    hsumXmean[2][im]->Fill(DAY_NUM,vsumB.X(),1); 
+                    hsumYmean[2][im]->Fill(DAY_NUM,vsumB.Y(),1); 
                 }
             }
             h0PhiEPvect->Fill(VectphiEP);
@@ -485,10 +531,6 @@ Int_t flowCount(TString inputlist, TString outfile, Int_t nev=-1)
             hRPA->Fill(VectphiEP);
             for(Int_t im=0;im<11;im++){
                 if( (Mtof+Mrpc)>=Mrang[im] && (Mtof+Mrpc)<Mrang[im+1]){ hPhiAB[im]->Fill(fabs(phiAB),wPhiRPA); }
-            }
-            for(Int_t im=0;im<11;im++){
-                if( (Mtof+Mrpc)>=Mrang[im]    && (Mtof+Mrpc)<Mrang[im+1]    ){ hRPAy[im]  ->Fill(VectphiEP); hRPAyc[im]  ->Fill(VectphiCorr); }
-                if( (nTrkMultCorr)>=MDCrn[im] && (nTrkMultCorr)<MDCrn[im+1] ){ hORPAy[im] ->Fill(VectphiEP); hORPAyc[im] ->Fill(VectphiCorr); }
             }
             hRPA6Ywc->Fill(VectphiCorr);
         }

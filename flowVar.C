@@ -111,6 +111,8 @@
       TVector2 vect(0.,0.);
       TVector2 vsum(0.,0.);
       TVector2 vsumCorr(0.,0.);
+      TVector2 vsumCorrA(0.,0.);
+      TVector2 vsumCorrB(0.,0.);
       TVector2   eX(1.,0.);
       Float_t dEdxCut=0.0;
       Float_t xyRadius=0.0;
@@ -177,16 +179,16 @@
   Float_t nTrkMultCorr, MtrC;
   //Debug & fixing---------------------------------------------------------------------------------
   Float_t pt0,y0;
+  Float_t phiCorA, phiCorB;
+  Float_t PsiA, PsiB;
   Float_t phiWEP,avSin,avCos,dPsi = 0.0;
-  Float_t dFOPIpsi             = 0.0;
   Float_t PsiCorr              = 0.0;
   Float_t PsiCorr2             = 0.0;
   Float_t PsiFOPI              = 0.0;
-  Float_t FlatCos[6][11][13]; Float_t FlatSin[6][11][13];
-  Float_t sumXmean[11][13];   Float_t sumYmean[11][13];
-  Float_t sumXsigma[11][13];  Float_t sumYsigma[11][13];
+  Float_t FlatCos[3][6][11][13]; Float_t FlatSin[3][6][11][13];
+  Float_t sumXmean[3][11][13];   Float_t sumYmean[3][11][13];
+  Float_t sumXsigma[3][11][13];  Float_t sumYsigma[3][11][13];
   Float_t betaMeanP;
   Bool_t pidFlag=kFALSE;
   Float_t Ntrack;
   Float_t wmod=0., wmodA=0.,wmodB=0.;
-  Float_t AvSin[3][6][11]; Float_t AvCos[3][6][11];
