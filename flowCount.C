@@ -447,9 +447,6 @@ Int_t flowCount(TString inputlist, TString outfile, Int_t nev=-1)
         phiCorAB= vsumCorrA.DeltaPhi(vsumCorrB) *rad2deg;
         phiCorA = vsumCorrA.DeltaPhi(eX)        *rad2deg;
         phiCorB = vsumCorrB.DeltaPhi(eX)        *rad2deg;
-        PsiAB   = phiCorA-phiCorB;
-        if (PsiAB> 180.){ PsiAB-=360; }
-        if (PsiAB<-180.){ PsiAB+=360; }
         Mfw     = NA+NB;
         if (Mfw > 3 && NA>1 && NB>1){
             for (Int_t im=0;im<11;im++){
@@ -527,6 +524,10 @@ Int_t flowCount(TString inputlist, TString outfile, Int_t nev=-1)
                     hsumYmean[2][im]->Fill(DAY_NUM,vsumB.Y(),1); 
                 }
             }
+
+            PsiAB   = PsiA-PsiB;
+            if (PsiAB> 180.){ PsiAB-=360; }
+            if (PsiAB<-180.){ PsiAB+=360; }
 
             for(Int_t im=0;im<11;im++){
                 if((Mtof+Mrpc)>=Mrang[im] && (Mtof+Mrpc)<Mrang[im+1]){
