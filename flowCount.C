@@ -441,12 +441,16 @@ Int_t flowCount(TString inputlist, TString outfile, Int_t nev=-1)
                 vsumCorrB = cellsVect.Recenter(vsumB,sumXmean[2][im][DAY_NUM-96],sumYmean[2][im][DAY_NUM-96],sumXsigma[2][im][DAY_NUM-96],sumYsigma[2][im][DAY_NUM-96]);
             }
         }
-        phiA   = vsumA.DeltaPhi(eX)       *rad2deg;
-        phiB   = vsumB.DeltaPhi(eX)       *rad2deg;
-        phiAB  = vsumA.DeltaPhi(vsumB)    *rad2deg;
-        phiCorA=vsumCorrA.DeltaPhi(eX)    *rad2deg;
-        phiCorB=vsumCorrB.DeltaPhi(eX)    *rad2deg;
-        Mfw = NA+NB;
+        phiA    = vsumA.DeltaPhi(eX)            *rad2deg;
+        phiB    = vsumB.DeltaPhi(eX)            *rad2deg;
+        phiAB   = vsumA.DeltaPhi(vsumB)         *rad2deg;
+        phiCorAB= vsumCorrA.DeltaPhi(vsumCorrB) *rad2deg;
+        phiCorA = vsumCorrA.DeltaPhi(eX)        *rad2deg;
+        phiCorB = vsumCorrB.DeltaPhi(eX)        *rad2deg;
+        PsiAB   = phiCorA-phiCorB;
+        if (PsiAB> 180.){ PsiAB-=360; }
+        if (PsiAB<-180.){ PsiAB+=360; }
+        Mfw     = NA+NB;
         if (Mfw > 3 && NA>1 && NB>1){
             for (Int_t im=0;im<11;im++){
                 if((Mtof+Mrpc)>=Mrang[im] && (Mtof+Mrpc)<Mrang[im+1]){
@@ -484,10 +488,15 @@ Int_t flowCount(TString inputlist, TString outfile, Int_t nev=-1)
 
                     hsumXmean[0][im]->Fill(DAY_NUM,vsum.X(),1); 
                     hsumYmean[0][im]->Fill(DAY_NUM,vsum.Y(),1); 
-                    hQvsM_X->Fill(Mtof+Mrpc,vsum.X()); 
-                    hQvsM_Y->Fill(Mtof+Mrpc,vsum.Y()); 
-                    hQvFW_X->Fill(nFWspect,vsum.X()); 
-                    hQvFW_Y->Fill(nFWspect,vsum.Y()); 
+
+                    hQvsM_X[0]->Fill(Mtof+Mrpc,vsum.X()); 
+                    hQvsM_Y[0]->Fill(Mtof+Mrpc,vsum.Y()); 
+                    hQvFW_X[0]->Fill(nFWspect,vsum.X()); 
+                    hQvFW_Y[0]->Fill(nFWspect,vsum.Y()); 
+                    hQvsM_X[1]->Fill(Mtof+Mrpc,vsumCorr.X()); 
+                    hQvsM_Y[1]->Fill(Mtof+Mrpc,vsumCorr.Y()); 
+                    hQvFW_X[1]->Fill(nFWspect,vsumCorr.X()); 
+                    hQvFW_Y[1]->Fill(nFWspect,vsumCorr.Y()); 
                 }
             }
             for (Int_t im=0;im<11;im++){
@@ -518,6 +527,58 @@ Int_t flowCount(TString inputlist, TString outfile, Int_t nev=-1)
                     hsumYmean[2][im]->Fill(DAY_NUM,vsumB.Y(),1); 
                 }
             }
+
+            for(Int_t im=0;im<11;im++){
+                if((Mtof+Mrpc)>=Mrang[im] && (Mtof+Mrpc)<Mrang[im+1]){
+                    for(Int_t n=0;n<2;n++){
+                        CosPsiAB_META[0][n]->Fill(Mtof+Mrpc,cos((n+1)*phiAB   ),1);
+                        CosPsiAB_META[1][n]->Fill(Mtof+Mrpc,cos((n+1)*phiCorAB),1);
+                        CosPsiAB_META[2][n]->Fill(Mtof+Mrpc,cos((n+1)*PsiAB   ),1);
+                        SinPsiAB_META[0][n]->Fill(Mtof+Mrpc,sin((n+1)*phiAB   ),1);
+                        SinPsiAB_META[1][n]->Fill(Mtof+Mrpc,sin((n+1)*phiCorAB),1);
+                        SinPsiAB_META[2][n]->Fill(Mtof+Mrpc,sin((n+1)*PsiAB   ),1);
+
+                        CosPsiAB_FW[  0][n]->Fill(nFWspect ,cos((n+1)*phiAB   ),1);
+                        CosPsiAB_FW[  1][n]->Fill(nFWspect ,cos((n+1)*phiCorAB),1);
+                        CosPsiAB_FW[  2][n]->Fill(nFWspect ,cos((n+1)*PsiAB   ),1);
+                        SinPsiAB_FW[  0][n]->Fill(nFWspect ,sin((n+1)*phiAB   ),1);
+                        SinPsiAB_FW[  1][n]->Fill(nFWspect ,sin((n+1)*phiCorAB),1);
+                        SinPsiAB_FW[  2][n]->Fill(nFWspect ,sin((n+1)*PsiAB   ),1);
+
+                        CosPsi_META[0][n][0]->Fill(Mtof+Mrpc,cos((n+1)*phiA   ),1);
+                        CosPsi_META[1][n][0]->Fill(Mtof+Mrpc,cos((n+1)*phiCorA),1);
+                        CosPsi_META[2][n][0]->Fill(Mtof+Mrpc,cos((n+1)*PsiA   ),1);
+                        SinPsi_META[0][n][0]->Fill(Mtof+Mrpc,sin((n+1)*phiA   ),1);
+                        SinPsi_META[1][n][0]->Fill(Mtof+Mrpc,sin((n+1)*phiCorA),1);
+                        SinPsi_META[2][n][0]->Fill(Mtof+Mrpc,sin((n+1)*PsiA   ),1);
+
+                        CosPsi_FW[  0][n][0]->Fill(nFWspect ,cos((n+1)*phiA   ),1);
+                        CosPsi_FW[  1][n][0]->Fill(nFWspect ,cos((n+1)*phiCorA),1);
+                        CosPsi_FW[  2][n][0]->Fill(nFWspect ,cos((n+1)*PsiA   ),1);
+                        SinPsi_FW[  0][n][0]->Fill(nFWspect ,sin((n+1)*phiA   ),1);
+                        SinPsi_FW[  1][n][0]->Fill(nFWspect ,sin((n+1)*phiCorA),1);
+                        SinPsi_FW[  2][n][0]->Fill(nFWspect ,sin((n+1)*PsiA   ),1);
+
+                        CosPsi_META[0][n][1]->Fill(Mtof+Mrpc,cos((n+1)*phiB   ),1);
+                        CosPsi_META[1][n][1]->Fill(Mtof+Mrpc,cos((n+1)*phiCorB),1);
+                        CosPsi_META[2][n][1]->Fill(Mtof+Mrpc,cos((n+1)*PsiB   ),1);
+                        SinPsi_META[0][n][1]->Fill(Mtof+Mrpc,sin((n+1)*phiB   ),1);
+                        SinPsi_META[1][n][1]->Fill(Mtof+Mrpc,sin((n+1)*phiCorB),1);
+                        SinPsi_META[2][n][1]->Fill(Mtof+Mrpc,sin((n+1)*PsiB   ),1);
+
+                        CosPsi_FW[  0][n][1]->Fill(nFWspect ,cos((n+1)*phiB   ),1);
+                        CosPsi_FW[  1][n][1]->Fill(nFWspect ,cos((n+1)*phiCorB),1);
+                        CosPsi_FW[  2][n][1]->Fill(nFWspect ,cos((n+1)*PsiB   ),1);
+                        SinPsi_FW[  0][n][1]->Fill(nFWspect ,sin((n+1)*phiB   ),1);
+                        SinPsi_FW[  1][n][1]->Fill(nFWspect ,sin((n+1)*phiCorB),1);
+                        SinPsi_FW[  2][n][1]->Fill(nFWspect ,sin((n+1)*PsiB   ),1);
+                    }
+                    hMETAvsCent->Fill(im+1,Mtof+Mrpc    );
+                    hFWvsCent  ->Fill(im+1,nFWspect     );
+                    hMETAvsFW  ->Fill(nFWspect,Mtof+Mrpc);
+                }
+            }
+
             h0PhiEPvect->Fill(VectphiEP);
             h0PhiEP->Fill(VectphiEP);
             hPhiCor->Fill(VectphiCorr);

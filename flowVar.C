@@ -122,6 +122,9 @@
       Float_t phiA             = -1000;
       Float_t phiB             = -1000;
       Float_t phiAB            = -1000;
+      Float_t phiCorA          = -1000;
+      Float_t phiCorB          = -1000;
+      Float_t phiCorAB         = -1000;
       Float_t phiEP[ 6], phiEPrec[6]; 
       Float_t phiEPr[6];
       Float_t dphi, dphiRec, dphiFlt;
@@ -179,8 +182,7 @@
   Float_t nTrkMultCorr, MtrC;
   //Debug & fixing---------------------------------------------------------------------------------
   Float_t pt0,y0;
-  Float_t phiCorA, phiCorB;
-  Float_t PsiA, PsiB;
+  Float_t PsiA, PsiB, PsiAB;
   Float_t phiWEP,avSin,avCos,dPsi = 0.0;
   Float_t PsiCorr              = 0.0;
   Float_t PsiCorr2             = 0.0;

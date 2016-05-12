@@ -135,7 +135,38 @@ TH1F* hFlatDiff[11];
 for (Int_t im=0;im<11;im++){
     hFlatDiff[im] = new TH1F(Form("hFlatDiff%i",im),Form("hFlatDiff %i",im),100,-2.,2.);
 }
-TProfile* hQvsM_X = new TProfile(Form("hQvsM_X"),Form("hQvsM_X"),300, 0., 300.);
-TProfile* hQvsM_Y = new TProfile(Form("hQvsM_Y"),Form("hQvsM_Y"),300, 0., 300.);
-TProfile* hQvFW_X = new TProfile(Form("hQvFW_X"),Form("hQvFW_X"),100, 0., 100.);
-TProfile* hQvFW_Y = new TProfile(Form("hQvFW_Y"),Form("hQvFW_Y"),100, 0., 100.);
+TProfile* hQvsM_X[2];
+TProfile* hQvsM_Y[2];
+TProfile* hQvFW_X[2];
+TProfile* hQvFW_Y[2];
+for (Int_t iT=0;iT<2;iT++){
+    hQvsM_X[iT] = new TProfile(Form("hQvsM_X%i",iT),Form("hQvsM_X %i",iT),300, 0., 300.);
+    hQvsM_Y[iT] = new TProfile(Form("hQvsM_Y%i",iT),Form("hQvsM_Y %i",iT),300, 0., 300.);
+    hQvFW_X[iT] = new TProfile(Form("hQvFW_X%i",iT),Form("hQvFW_X %i",iT),100, 0., 100.);
+    hQvFW_Y[iT] = new TProfile(Form("hQvFW_Y%i",iT),Form("hQvFW_Y %i",iT),100, 0., 100.);
+}
+TProfile* CosPsiAB_META[3][2];
+TProfile* SinPsiAB_META[3][2];
+TProfile* CosPsiAB_FW[  3][2];
+TProfile* SinPsiAB_FW[  3][2];
+TProfile* CosPsi_META[  3][2][2]; // [TYPE][Harmonic][A/B];
+TProfile* SinPsi_META[  3][2][2]; // [TYPE][Harmonic][A/B];
+TProfile* CosPsi_FW[    3][2][2];
+TProfile* SinPsi_FW[    3][2][2];
+for (Int_t iT=0;iT<3;iT++){
+    for(Int_t n=0; n<2; n++){
+        CosPsiAB_META[iT][n] = new TProfile(Form("CosPsiAB_META%i%i",iT,n),Form("CosPsiAB_META %i %i",iT,n),300,0.,300.);
+        SinPsiAB_META[iT][n] = new TProfile(Form("SinPsiAB_META%i%i",iT,n),Form("SinPsiAB_META %i %i",iT,n),300,0.,300.);
+        CosPsiAB_FW[  iT][n] = new TProfile(Form("CosPsiAB_FW%i%i"  ,iT,n),Form("CosPsiAB_FW %i %i"  ,iT,n),100,0.,100.);
+        SinPsiAB_FW[  iT][n] = new TProfile(Form("SinPsiAB_FW%i%i"  ,iT,n),Form("SinPsiAB_FW %i %i"  ,iT,n),100,0.,100.);
+        for (Int_t k=0;k<2;k++){
+            CosPsi_META[iT][n][k] = new TProfile(Form("CosPsi_META%i%i%i",iT,n,k),Form("CosPsi_META %i %i %i",iT,n,k),300,0.,300.);
+            SinPsi_META[iT][n][k] = new TProfile(Form("SinPsi_META%i%i%i",iT,n,k),Form("SinPsi_META %i %i %i",iT,n,k),300,0.,300.);
+            CosPsi_FW[  iT][n][k] = new TProfile(Form("CosPsi_FW%i%i%i"  ,iT,n,k),Form("CosPsi_FW %i %i %i"  ,iT,n,k),100,0.,100.);
+            SinPsi_FW[  iT][n][k] = new TProfile(Form("SinPsi_FW%i%i%i"  ,iT,n,k),Form("SinPsi_FW %i %i %i"  ,iT,n,k),100,0.,100.);
+        }
+    }
+}
+TH2F*     hMETAvsCent = new TH2F("hMETAvsCent","hMETAvsCent",12 ,1.,12. ,300,0.,300.);
+TH2F*     hFWvsCent   = new TH2F("hFWvsCent"  ,"hFWvsCent"  ,12 ,1.,12. ,100,0.,100.);
+TH2F*     hMETAvsFW   = new TH2F("hMETAvsFW"  ,"hMETAvsFW"  ,100,0.,100.,300,0.,300.);
