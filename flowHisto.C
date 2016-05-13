@@ -170,3 +170,5 @@ for (Int_t iT=0;iT<3;iT++){
 TH2F*     hMETAvsCent = new TH2F("hMETAvsCent","hMETAvsCent",12 ,1.,12. ,300,0.,300.);
 TH2F*     hFWvsCent   = new TH2F("hFWvsCent"  ,"hFWvsCent"  ,12 ,1.,12. ,120,0.,120.);
 TH2F*     hMETAvsFW   = new TH2F("hMETAvsFW"  ,"hMETAvsFW"  ,120,0.,120.,300,0.,300.);
+TProfile* cQxMETA     = new TProfile("cQxMETA","cQxMETA"    ,300,0.,300.);
+TProfile* cQyMETA     = new TProfile("cQyMETA","cQyMETA"    ,300,0.,300.);

@@ -495,6 +495,9 @@ Int_t flowCount(TString inputlist, TString outfile, Int_t nev=-1)
                     hsumXmean[0][im]->Fill(DAY_NUM,vsum.X(),1); 
                     hsumYmean[0][im]->Fill(DAY_NUM,vsum.Y(),1); 
 
+                    cQxMETA->Fill(Mtof+Mrpc,vsum.X(),1);
+                    cQyMETA->Fill(Mtof+Mrpc,vsum.X(),1);
+
                     hQvsM_X[0]->Fill(Mtof+Mrpc,vsum.X()); 
                     hQvsM_Y[0]->Fill(Mtof+Mrpc,vsum.Y()); 
                     hQvFW_X[0]->Fill(nFWspect,vsum.X()); 
