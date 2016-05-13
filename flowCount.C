@@ -164,7 +164,8 @@ Int_t flowCount(TString inputlist, TString outfile, Int_t nev=-1)
             #include "/u/parfenov/anaflow/FlatSinCos.cc"
             //#include "/u/parfenov/anaflow/FOPICorPar.cc"
             #include "/u/parfenov/anaflow/Recenter.cc"
-            #include "/u/parfenov/anaflow/RecenterFW.cc" //recenter FW;
+            #include "/u/parfenov/anaflow/RecenterMETA.cc"
+            //#include "/u/parfenov/anaflow/RecenterFW.cc" //recenter FW;
             //#include "/u/parfenov/anaflow/FlatFourier.cc"//for flattening Psi_EP via fit;
             //--Now-we-read-multiplicity-parameters-for-this-beXXXXXXXXXX-file--------------------//
             mulVal = cCorr.getLineValuesAsVectFromCalibFile( currBeName );
@@ -382,6 +383,13 @@ Int_t flowCount(TString inputlist, TString outfile, Int_t nev=-1)
             }//end-if-cells-cut---
         }//end-for-HitWall-loop---
         vsum      /= wmod;
+        for (Int_t iMETA=1;iMETA<215;iMETA++){
+            if((Mtof+Mrpc)== iMETA){
+                vsumMETA = cellsVect.Recenter(vsum,Qxmean[iMETA],Qymean[iMETA],Qxsigm[iMETA],Qysigm[iMETA]);
+                hQvXMETA->Fill((Mtof+Mrpc),vsumMETA.X(),1);
+                hQvYMETA->Fill((Mtof+Mrpc),vsumMETA.Y(),1);
+            }
+        }
         for (Int_t im=0;im<11;im++){
             if((Mtof+Mrpc)>=Mrang[im] && (Mtof+Mrpc)<Mrang[im+1]){
                 vsumCorr = cellsVect.Recenter(vsum,sumXmean[0][im][DAY_NUM-96],sumYmean[0][im][DAY_NUM-96],sumXsigma[0][im][DAY_NUM-96],sumYsigma[0][im][DAY_NUM-96]);
@@ -494,9 +502,6 @@ Int_t flowCount(TString inputlist, TString outfile, Int_t nev=-1)
 
                     hsumXmean[0][im]->Fill(DAY_NUM,vsum.X(),1); 
                     hsumYmean[0][im]->Fill(DAY_NUM,vsum.Y(),1); 
-
-                    cQxMETA->Fill(Mtof+Mrpc,vsum.X(),1);
-                    cQyMETA->Fill(Mtof+Mrpc,vsum.X(),1);
 
                     hQvsM_X[0]->Fill(Mtof+Mrpc,vsum.X()); 
                     hQvsM_Y[0]->Fill(Mtof+Mrpc,vsum.Y()); 

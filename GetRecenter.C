@@ -44,4 +44,24 @@
         }
     }
     fclose(output);
+
+
+    TObject* object;
+    TProfile* QvX;
+    TProfile* QvY;
+    FILE* output1 = fopen("RecenterMETA.cc","wt");
+    key = gDirectory->GetKey(Form("hQvsM_X%i",0));
+    object = key->ReadObj();
+    QvX = (TProfile*)object;
+
+    key = gDirectory->GetKey(Form("hQvsM_Y%i",0));
+    object = key->ReadObj();
+    QvY = (TProfile*)object;
+
+    cout << "reading complite 2" << endl;
+
+    for (Int_t i=0;i<215;i++){
+        fprintf(output1,"Qxmean[%i] = %2.10f; Qymean[%i] = %2.10f; Qxsigm[%i] = %2.10f; Qysigm[%i] = %2.10f;\n",i,QvX->GetBinContent(i+1),i,QvY->GetBinContent(i+1),i,QvX->GetBinError(i+1),i,QvY->GetBinError(i+1));
+    }
+    fclose(output1);
 }
