@@ -111,6 +111,9 @@
       TVector2 vect(0.,0.);
       TVector2 vsum(0.,0.);
       TVector2 vsumCorr(0.,0.);
+      TVector2 vsumRec( 0.,0.);
+      TVector2 vsumRecA(0.,0.);
+      TVector2 vsumRecB(0.,0.);
       TVector2 vsumCorrA(0.,0.);
       TVector2 vsumCorrB(0.,0.);
       TVector2   eX(1.,0.);

@@ -385,6 +385,7 @@ Int_t flowCount(TString inputlist, TString outfile, Int_t nev=-1)
         for (Int_t im=0;im<11;im++){
             if((Mtof+Mrpc)>=Mrang[im] && (Mtof+Mrpc)<Mrang[im+1]){
                 vsumCorr = cellsVect.Recenter(vsum,sumXmean[0][im][DAY_NUM-96],sumYmean[0][im][DAY_NUM-96],sumXsigma[0][im][DAY_NUM-96],sumYsigma[0][im][DAY_NUM-96]);
+                vsumRec.Set(vsumCorr.X()*sumXsigma[0][im][DAY_NUM-96],vsumCorr.Y()*sumYsigma[0][im][DAY_NUM-96]);
             }
         }
         VectphiEP =  vsum.DeltaPhi(eX)    *rad2deg;
@@ -439,6 +440,8 @@ Int_t flowCount(TString inputlist, TString outfile, Int_t nev=-1)
             if((Mtof+Mrpc)>=Mrang[im] && (Mtof+Mrpc)<Mrang[im+1]){
                 vsumCorrA = cellsVect.Recenter(vsumA,sumXmean[1][im][DAY_NUM-96],sumYmean[1][im][DAY_NUM-96],sumXsigma[1][im][DAY_NUM-96],sumYsigma[1][im][DAY_NUM-96]);
                 vsumCorrB = cellsVect.Recenter(vsumB,sumXmean[2][im][DAY_NUM-96],sumYmean[2][im][DAY_NUM-96],sumXsigma[2][im][DAY_NUM-96],sumYsigma[2][im][DAY_NUM-96]);
+                vsumRecA.Set(vsumCorrA.X()*sumXsigma[1][im][DAY_NUM-96],vsumCorrA.Y()*sumYsigma[1][im][DAY_NUM-96]);
+                vsumRecA.Set(vsumCorrA.X()*sumXsigma[2][im][DAY_NUM-96],vsumCorrA.Y()*sumYsigma[2][im][DAY_NUM-96]);
             }
         }
         phiA    = vsumA.DeltaPhi(eX)            *rad2deg;
@@ -496,10 +499,10 @@ Int_t flowCount(TString inputlist, TString outfile, Int_t nev=-1)
                     hQvsM_Y[0]->Fill(Mtof+Mrpc,vsum.Y()); 
                     hQvFW_X[0]->Fill(nFWspect,vsum.X()); 
                     hQvFW_Y[0]->Fill(nFWspect,vsum.Y()); 
-                    hQvsM_X[1]->Fill(Mtof+Mrpc,vsumCorr.X()); 
-                    hQvsM_Y[1]->Fill(Mtof+Mrpc,vsumCorr.Y()); 
-                    hQvFW_X[1]->Fill(nFWspect,vsumCorr.X()); 
-                    hQvFW_Y[1]->Fill(nFWspect,vsumCorr.Y()); 
+                    hQvsM_X[1]->Fill(Mtof+Mrpc,vsumRec.X()); 
+                    hQvsM_Y[1]->Fill(Mtof+Mrpc,vsumRec.Y()); 
+                    hQvFW_X[1]->Fill(nFWspect,vsumRec.X()); 
+                    hQvFW_Y[1]->Fill(nFWspect,vsumRec.Y()); 
                 }
             }
             for (Int_t im=0;im<11;im++){
