@@ -73,12 +73,12 @@ for (Int_t iT=0;iT<3;iT++){
         hPsiCorr[ iT][i] = new TH1F(Form("hPsiCorr%i%i" ,iT,i),Form("hPsiCorr %i %i after_flattering" ,iT,i), 90, -180., 180.);
         hdPsi[    iT][i] = new TH1F(Form("hdPsi%i%i" ,iT,i),Form("hdPsi %i %i after_flattering" ,iT,i), 100, -5., 5.);
         hOPsiCorr[iT][i] = new TH1F(Form("hOPsiCorr%i%i",iT,i),Form("hOPsiCorr %i %i after_corr",iT,i), 90, -180., 180.);
-        hQvectX[  iT][i] = new TH1F(Form("hQvectX%i%i",iT,i),Form("hQvectX %i %i FW",iT,i), 600, -5., 5.);
-        hQvectY[  iT][i] = new TH1F(Form("hQvectY%i%i",iT,i),Form("hQvectY %i %i FW",iT,i), 600, -5., 5.); 
-        hQvXrec[  iT][i] = new TH1F(Form("hQvXrec%i%i",iT,i),Form("hQvXrec %i %i FW",iT,i), 600, -50., 50.);
-        hQvYrec[  iT][i] = new TH1F(Form("hQvYrec%i%i",iT,i),Form("hQvYrec %i %i FW",iT,i), 600, -50., 50.);
-        hQvRaw[   iT][i] = new TH2F(Form("hQvRaw%i%i",iT,i) ,Form("Qvect %i %i Raw",iT,i), 1000, -5., 5., 1000, -5., 5.);
-        hQvRec[   iT][i] = new TH2F(Form("hQvRec%i%i",iT,i) ,Form("Qvect %i %i Rec",iT,i), 1000, -50., 50., 1000, -50., 50.);
+        hQvectX[  iT][i] = new TH1F(Form("hQvectX%i%i",iT,i),Form("hQvectX %i %i FW",iT,i), 600, -2., 2.);
+        hQvectY[  iT][i] = new TH1F(Form("hQvectY%i%i",iT,i),Form("hQvectY %i %i FW",iT,i), 600, -2., 2.); 
+        hQvXrec[  iT][i] = new TH1F(Form("hQvXrec%i%i",iT,i),Form("hQvXrec %i %i FW",iT,i), 600, -5., 5.);
+        hQvYrec[  iT][i] = new TH1F(Form("hQvYrec%i%i",iT,i),Form("hQvYrec %i %i FW",iT,i), 600, -5., 5.);
+        hQvRaw[   iT][i] = new TH2F(Form("hQvRaw%i%i",iT,i) ,Form("Qvect %i %i Raw",iT,i), 1000, -2., 2., 1000, -2., 2.);
+        hQvRec[   iT][i] = new TH2F(Form("hQvRec%i%i",iT,i) ,Form("Qvect %i %i Rec",iT,i), 1000, -5., 5., 1000, -5., 5.);
     }
 }
  

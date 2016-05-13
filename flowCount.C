@@ -453,7 +453,13 @@ Int_t flowCount(TString inputlist, TString outfile, Int_t nev=-1)
                 if((Mtof+Mrpc)>=Mrang[im] && (Mtof+Mrpc)<Mrang[im+1]){
                     hQvectX[0][im]->Fill(vsum.X());          hQvectY[0][im]->Fill(vsum.Y());
                     hQvXrec[0][im]->Fill(vsumCorr.X());      hQvYrec[0][im]->Fill(vsumCorr.Y());
+                    hQvectX[1][im]->Fill(vsumA.X());         hQvectY[1][im]->Fill(vsumA.Y());
+                    hQvXrec[1][im]->Fill(vsumCorrA.X());     hQvYrec[1][im]->Fill(vsumCorrA.Y());
+                    hQvectX[2][im]->Fill(vsumB.X());         hQvectY[2][im]->Fill(vsumB.Y());
+                    hQvXrec[2][im]->Fill(vsumCorrB.X());     hQvYrec[2][im]->Fill(vsumCorrB.Y());
                     hQvRaw[0][ im]->Fill(vsum.X(),vsum.Y()); hQvRec[0][ im]->Fill(vsumCorr.X(),vsumCorr.Y());
+                    hQvRaw[1][ im]->Fill(vsumA.X(),vsumA.Y()); hQvRec[1][ im]->Fill(vsumCorrA.X(),vsumCorrA.Y());
+                    hQvRaw[2][ im]->Fill(vsumB.X(),vsumB.Y()); hQvRec[2][ im]->Fill(vsumCorrB.X(),vsumCorrB.Y());
                 }
             }
             for (Int_t n=1;n<=6;n++){
