@@ -616,7 +616,13 @@ class HWallFiredCellsVA{
     Int_t GetNumbOfCells(){return nCells;}
 
     TVector2 Recenter(TVector2 vect, Float_t Qx, Float_t Qy, Float_t Sx, Float_t Sy){
-      v.Set((vect.X()-Qx)/Sx,(vect.Y()-Qy)/Sy);
+      if (Sx!=0 && Sy!=0){ v.Set((vect.X()-Qx)/Sx,(vect.Y()-Qy)/Sy); }
+      else{ v.Set(vect.X(),vect.Y()); }
+      return v;
+    }
+
+    TVector2 Recenter(TVector2 vect, Float_t Qx, Float_t Qy){
+      v.Set(vect.X()-Qx,vect.Y()-Qy);
       return v;
     }
 

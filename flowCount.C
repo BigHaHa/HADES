@@ -165,7 +165,7 @@ Int_t flowCount(TString inputlist, TString outfile, Int_t nev=-1)
             //#include "/u/parfenov/anaflow/FOPICorPar.cc"
             #include "/u/parfenov/anaflow/Recenter.cc"
             #include "/u/parfenov/anaflow/RecenterMETA.cc"
-            //#include "/u/parfenov/anaflow/RecenterFW.cc" //recenter FW;
+            #include "/u/parfenov/anaflow/RecenterFW.cc" //Q vect recenter FW;
             //#include "/u/parfenov/anaflow/FlatFourier.cc"//for flattening Psi_EP via fit;
             //--Now-we-read-multiplicity-parameters-for-this-beXXXXXXXXXX-file--------------------//
             mulVal = cCorr.getLineValuesAsVectFromCalibFile( currBeName );
@@ -275,8 +275,10 @@ Int_t flowCount(TString inputlist, TString outfile, Int_t nev=-1)
                 }
             }
         }
-        vect.Set(0.,0.);
-        vsum.Set(0.,0.);
+        vect.Set(    0.,0.);
+        vsum.Set(    0.,0.);
+        vsumMETA.Set(0.,0.);
+        vsumFW.Set(  0.,0.);
         vsumCorr.Set(0.,0.);
         vsumCorrA.Set(0.,0.);
         vsumCorrB.Set(0.,0.);
@@ -383,17 +385,12 @@ Int_t flowCount(TString inputlist, TString outfile, Int_t nev=-1)
             }//end-if-cells-cut---
         }//end-for-HitWall-loop---
         vsum      /= wmod;
-        for (Int_t iMETA=1;iMETA<215;iMETA++){
-            if((Mtof+Mrpc)== iMETA){
-                vsumMETA = cellsVect.Recenter(vsum,Qxmean[iMETA],Qymean[iMETA],Qxsigm[iMETA],Qysigm[iMETA]);
-                hQvXMETA->Fill((Mtof+Mrpc),vsumMETA.X(),1);
-                hQvYMETA->Fill((Mtof+Mrpc),vsumMETA.Y(),1);
-            }
-        }
         for (Int_t im=0;im<11;im++){
             if((Mtof+Mrpc)>=Mrang[im] && (Mtof+Mrpc)<Mrang[im+1]){
                 vsumCorr = cellsVect.Recenter(vsum,sumXmean[0][im][DAY_NUM-96],sumYmean[0][im][DAY_NUM-96],sumXsigma[0][im][DAY_NUM-96],sumYsigma[0][im][DAY_NUM-96]);
-                vsumRec.Set(vsumCorr.X()*sumXsigma[0][im][DAY_NUM-96],vsumCorr.Y()*sumYsigma[0][im][DAY_NUM-96]);
+                vsumRec  = cellsVect.Recenter(vsum,sumXmean[0][im][DAY_NUM-96],sumYmean[0][im][DAY_NUM-96]);
+                if( nFWspect>=0 && nFWspect< 100 )        vsumFW   = cellsVect.Recenter(vsum,mQxFW[nFWspect]  ,mQyFW[nFWspect]  );
+                if( (Mtof+Mrpc)>=20 && (Mtof+Mrpc)< 215 ) vsumMETA = cellsVect.Recenter(vsum,Qxmean[Mtof+Mrpc],Qymean[Mtof+Mrpc]);
             }
         }
         VectphiEP =  vsum.DeltaPhi(eX)    *rad2deg;
@@ -511,6 +508,12 @@ Int_t flowCount(TString inputlist, TString outfile, Int_t nev=-1)
                     hQvsM_Y[1]->Fill(Mtof+Mrpc,vsumRec.Y()); 
                     hQvFW_X[1]->Fill(nFWspect,vsumRec.X()); 
                     hQvFW_Y[1]->Fill(nFWspect,vsumRec.Y()); 
+
+                    hQvXMETA->Fill((Mtof+Mrpc),vsumMETA.X());
+                    hQvYMETA->Fill((Mtof+Mrpc),vsumMETA.Y());
+
+                    hQvXFW  ->Fill(nFWspect   ,vsumFW.X()  );
+                    hQvYFW  ->Fill(nFWspect   ,vsumFW.Y()  );
                 }
             }
             for (Int_t im=0;im<11;im++){

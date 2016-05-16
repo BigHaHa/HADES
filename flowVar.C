@@ -111,6 +111,7 @@
       TVector2 vect(0.,0.);
       TVector2 vsum(0.,0.);
       TVector2 vsumCorr(0.,0.);
+      TVector2 vsumFW(  0.,0.);
       TVector2 vsumMETA(0.,0.);
       TVector2 vsumRec( 0.,0.);
       TVector2 vsumRecA(0.,0.);
@@ -199,3 +200,4 @@
   Float_t Ntrack;
   Float_t wmod=0., wmodA=0.,wmodB=0.;
   Float_t Qxmean[215],Qymean[215],Qxsigm[215],Qysigm[215];
+  Float_t mQxFW[100],mQyFW[100],sQxFW[100],sQyFW[100];

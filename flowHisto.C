@@ -173,3 +173,5 @@ TH2F*     hMETAvsFW   = new TH2F("hMETAvsFW"  ,"hMETAvsFW"  ,120,0.,120.,300,0.,
 
 TProfile* hQvXMETA = new TProfile("hQvXMETA","hQvXMETA",300,0.,300.);
 TProfile* hQvYMETA = new TProfile("hQvYMETA","hQvYMETA",300,0.,300.);
+TProfile* hQvXFW   = new TProfile("hQvXFW"  ,"hQvXFW"  ,120,0.,120.);
+TProfile* hQvYFW   = new TProfile("hQvYFW"  ,"hQvYFW"  ,120,0.,120.);
