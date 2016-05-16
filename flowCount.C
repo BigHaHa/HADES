@@ -385,12 +385,19 @@ Int_t flowCount(TString inputlist, TString outfile, Int_t nev=-1)
             }//end-if-cells-cut---
         }//end-for-HitWall-loop---
         vsum      /= wmod;
+        //mQx = mQxFW[nFWspect];
+        //mQy = mQyFW[nFWspect];
+        //if (mQx = mQxFW[nFWspect]) cout  << " ev = " << i << " * " << nFWspect << "| Qx = " << mQx << "; Qy = " << mQy <<"; vX = " << vsum.X() << "; vY = " << vsum.Y() << endl;
+        //if(  nFWspect>=0    &&  nFWspect< 100   ) vsumFW.Set(vsum.X() - mQxFW[nFWspect],vsum.Y() - mQyFW[nFWspect]);
+        mQx = vsum.X() - mQx;
+        mQy = vsum.Y() - mQy;
         for (Int_t im=0;im<11;im++){
             if((Mtof+Mrpc)>=Mrang[im] && (Mtof+Mrpc)<Mrang[im+1]){
                 vsumCorr = cellsVect.Recenter(vsum,sumXmean[0][im][DAY_NUM-96],sumYmean[0][im][DAY_NUM-96],sumXsigma[0][im][DAY_NUM-96],sumYsigma[0][im][DAY_NUM-96]);
-                vsumRec  = cellsVect.Recenter(vsum,sumXmean[0][im][DAY_NUM-96],sumYmean[0][im][DAY_NUM-96]);
-                if( nFWspect>=0 && nFWspect< 100 )        vsumFW   = cellsVect.Recenter(vsum,mQxFW[nFWspect]  ,mQyFW[nFWspect]  );
+                //vsumRec  = cellsVect.Recenter(vsum,sumXmean[0][im][DAY_NUM-96],sumYmean[0][im][DAY_NUM-96]);
+                vsumFW   = cellsVect.Recenter(vsum,mQxFW[nFWspect]            ,mQyFW[nFWspect]            );
                 if( (Mtof+Mrpc)>=20 && (Mtof+Mrpc)< 215 ) vsumMETA = cellsVect.Recenter(vsum,Qxmean[Mtof+Mrpc],Qymean[Mtof+Mrpc]);
+                //cout << "ev = " << i << " | QxR = " << vsumFW.X() << "; QyR = " << vsumFW.Y() << ";" << endl; 
             }
         }
         VectphiEP =  vsum.DeltaPhi(eX)    *rad2deg;
@@ -502,18 +509,12 @@ Int_t flowCount(TString inputlist, TString outfile, Int_t nev=-1)
 
                     hQvsM_X[0]->Fill(Mtof+Mrpc,vsum.X()); 
                     hQvsM_Y[0]->Fill(Mtof+Mrpc,vsum.Y()); 
-                    hQvFW_X[0]->Fill(nFWspect,vsum.X()); 
-                    hQvFW_Y[0]->Fill(nFWspect,vsum.Y()); 
-                    hQvsM_X[1]->Fill(Mtof+Mrpc,vsumRec.X()); 
-                    hQvsM_Y[1]->Fill(Mtof+Mrpc,vsumRec.Y()); 
-                    hQvFW_X[1]->Fill(nFWspect,vsumRec.X()); 
-                    hQvFW_Y[1]->Fill(nFWspect,vsumRec.Y()); 
-
-                    hQvXMETA->Fill((Mtof+Mrpc),vsumMETA.X());
-                    hQvYMETA->Fill((Mtof+Mrpc),vsumMETA.Y());
-
-                    hQvXFW  ->Fill(nFWspect   ,vsumFW.X()  );
-                    hQvYFW  ->Fill(nFWspect   ,vsumFW.Y()  );
+                    hQvFW_X[0]->Fill(nFWspect ,vsum.X()); 
+                    hQvFW_Y[0]->Fill(nFWspect ,vsum.Y()); 
+                    hQvsM_X[1]->Fill(Mtof+Mrpc,vsumFW.X()); 
+                    hQvsM_Y[1]->Fill(Mtof+Mrpc,vsumFW.Y()); 
+                    hQvFW_X[1]->Fill(nFWspect ,vsumFW.X()); 
+                    hQvFW_Y[1]->Fill(nFWspect ,vsumFW.Y()); 
                 }
             }
             for (Int_t im=0;im<11;im++){

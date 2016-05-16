@@ -27,7 +27,7 @@
     */
     //---------------------------------------------------------------------------------------------------------------------------------------------------------//
     
-    /*
+    
     TProfile* QxMult[2][2];
     TProfile* QyMult[2][2];
 
@@ -47,10 +47,10 @@
     canv->SaveAs(Form("/home/peter/Documents/WorkLocal/WorkFiles/HADES/pionflow/anaflow/Results/Doc/QxFW.png"),"recreate");
     canv = makePlot(QyMult[0][1],"Raw",QyMult[1][1],"Recentered","FW","<Q_{y}>","S");
     canv->SaveAs(Form("/home/peter/Documents/WorkLocal/WorkFiles/HADES/pionflow/anaflow/Results/Doc/QyFW.png"),"recreate");
-    */
+    
     //---------------------------------------------------------------------------------------------------------------------------------------------------------//
     
-    /*
+    
     TProfile* CosPsiAB[2][3][2]; //[iM=META/FW][iT=Raw/Recentered/Flattened][n=1,2 harmonics]
     TProfile* SinPsiAB[2][3][2];
 
@@ -91,7 +91,7 @@
     canv->SaveAs(Form("/home/peter/Documents/WorkLocal/WorkFiles/HADES/pionflow/anaflow/Results/Resolution/CosPsi2AB_FW.png"),"recreate");
     canv = makePlot(SinPsiAB[1][0][1],"Raw",SinPsiAB[1][1][1],"Recentered",SinPsiAB[1][2][1],"Flattened","FW"     ,"<sin(2(#varphi_{A}-#varphi_{B}))>","S");
     canv->SaveAs(Form("/home/peter/Documents/WorkLocal/WorkFiles/HADES/pionflow/anaflow/Results/Resolution/SinPsi2AB_FW.png"),"recreate");
-    */
+    
     //---------------------------------------------------------------------------------------------------------------------------------------------------------//
 
     

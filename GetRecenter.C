@@ -73,8 +73,8 @@
     object = key->ReadObj();
     QvX[1] = (TProfile*)object;
 
-    key = gDirectory->GetKey(Form("hQvsM_Y%i",0));
-    if( key = gDirectory->GetKey(Form("hQvsM_Y%i",0)) ) cout << key->GetName() << endl;
+    key = gDirectory->GetKey(Form("hQvFW_Y%i",0));
+    if( key = gDirectory->GetKey(Form("hQvFW_Y%i",0)) ) cout << key->GetName() << endl;
     object = key->ReadObj();
     QvY[1] = (TProfile*)object;
 
