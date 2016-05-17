@@ -135,15 +135,17 @@ TH1F* hFlatDiff[11];
 for (Int_t im=0;im<11;im++){
     hFlatDiff[im] = new TH1F(Form("hFlatDiff%i",im),Form("hFlatDiff %i",im),100,-2.,2.);
 }
-TProfile* hQvsM_X[2];
-TProfile* hQvsM_Y[2];
-TProfile* hQvFW_X[2];
-TProfile* hQvFW_Y[2];
+TProfile* hQvsM_X[2][3];
+TProfile* hQvsM_Y[2][3];
+TProfile* hQvFW_X[2][3];
+TProfile* hQvFW_Y[2][3];
 for (Int_t iT=0;iT<2;iT++){
-    hQvsM_X[iT] = new TProfile(Form("hQvsM_X%i",iT),Form("hQvsM_X %i",iT),300, 0., 300.);
-    hQvsM_Y[iT] = new TProfile(Form("hQvsM_Y%i",iT),Form("hQvsM_Y %i",iT),300, 0., 300.);
-    hQvFW_X[iT] = new TProfile(Form("hQvFW_X%i",iT),Form("hQvFW_X %i",iT),100, 0., 100.);
-    hQvFW_Y[iT] = new TProfile(Form("hQvFW_Y%i",iT),Form("hQvFW_Y %i",iT),100, 0., 100.);
+    for(Int_t iF=0;iF<3;iF++){
+        hQvsM_X[iT][iF] = new TProfile(Form("hQvsM_X%i%i",iT,iF),Form("hQvsM_X %i %i",iT,iF),300, 0., 300.);
+        hQvsM_Y[iT][iF] = new TProfile(Form("hQvsM_Y%i%i",iT,iF),Form("hQvsM_Y %i %i",iT,iF),300, 0., 300.);
+        hQvFW_X[iT][iF] = new TProfile(Form("hQvFW_X%i%i",iT,iF),Form("hQvFW_X %i %i",iT,iF),100, 0., 100.);
+        hQvFW_Y[iT][iF] = new TProfile(Form("hQvFW_Y%i%i",iT,iF),Form("hQvFW_Y %i %i",iT,iF),100, 0., 100.);
+    }
 }
 TProfile* CosPsiAB_META[3][2];
 TProfile* SinPsiAB_META[3][2];

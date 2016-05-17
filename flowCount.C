@@ -393,9 +393,9 @@ Int_t flowCount(TString inputlist, TString outfile, Int_t nev=-1)
         mQy = vsum.Y() - mQy;
         for (Int_t im=0;im<11;im++){
             if((Mtof+Mrpc)>=Mrang[im] && (Mtof+Mrpc)<Mrang[im+1]){
-                vsumCorr = cellsVect.Recenter(vsum,sumXmean[0][im][DAY_NUM-96],sumYmean[0][im][DAY_NUM-96],sumXsigma[0][im][DAY_NUM-96],sumYsigma[0][im][DAY_NUM-96]);
+                //vsumCorr = cellsVect.Recenter(vsum,sumXmean[0][im][DAY_NUM-96],sumYmean[0][im][DAY_NUM-96],sumXsigma[0][im][DAY_NUM-96],sumYsigma[0][im][DAY_NUM-96]);
                 //vsumRec  = cellsVect.Recenter(vsum,sumXmean[0][im][DAY_NUM-96],sumYmean[0][im][DAY_NUM-96]);
-                vsumFW   = cellsVect.Recenter(vsum,mQxFW[nFWspect]            ,mQyFW[nFWspect]            );
+                vsumCorr   = cellsVect.Recenter(vsum,mQxFW[nFWspect]            ,mQyFW[nFWspect]            );
                 if( (Mtof+Mrpc)>=20 && (Mtof+Mrpc)< 215 ) vsumMETA = cellsVect.Recenter(vsum,Qxmean[Mtof+Mrpc],Qymean[Mtof+Mrpc]);
                 //cout << "ev = " << i << " | QxR = " << vsumFW.X() << "; QyR = " << vsumFW.Y() << ";" << endl; 
             }
@@ -507,14 +507,22 @@ Int_t flowCount(TString inputlist, TString outfile, Int_t nev=-1)
                     hsumXmean[0][im]->Fill(DAY_NUM,vsum.X(),1); 
                     hsumYmean[0][im]->Fill(DAY_NUM,vsum.Y(),1); 
 
-                    hQvsM_X[0]->Fill(Mtof+Mrpc,vsum.X()); 
-                    hQvsM_Y[0]->Fill(Mtof+Mrpc,vsum.Y()); 
-                    hQvFW_X[0]->Fill(nFWspect ,vsum.X()); 
-                    hQvFW_Y[0]->Fill(nFWspect ,vsum.Y()); 
-                    hQvsM_X[1]->Fill(Mtof+Mrpc,vsumFW.X()); 
-                    hQvsM_Y[1]->Fill(Mtof+Mrpc,vsumFW.Y()); 
-                    hQvFW_X[1]->Fill(nFWspect ,vsumFW.X()); 
-                    hQvFW_Y[1]->Fill(nFWspect ,vsumFW.Y()); 
+                    hQvsM_X[0][0]->Fill(Mtof+Mrpc,vsum.X()); 
+                    hQvsM_Y[0][0]->Fill(Mtof+Mrpc,vsum.Y()); 
+                    hQvFW_X[0][0]->Fill(nFWspect ,vsum.X()); 
+                    hQvFW_Y[0][0]->Fill(nFWspect ,vsum.Y()); 
+                    hQvsM_X[0][1]->Fill(Mtof+Mrpc,vsumA.X()); 
+                    hQvsM_Y[0][1]->Fill(Mtof+Mrpc,vsumA.Y()); 
+                    hQvFW_X[0][1]->Fill(nFWspect ,vsumA.X()); 
+                    hQvFW_Y[0][1]->Fill(nFWspect ,vsumA.Y());
+                    hQvsM_X[0][2]->Fill(Mtof+Mrpc,vsumB.X()); 
+                    hQvsM_Y[0][2]->Fill(Mtof+Mrpc,vsumB.Y()); 
+                    hQvFW_X[0][2]->Fill(nFWspect ,vsumB.X()); 
+                    hQvFW_Y[0][2]->Fill(nFWspect ,vsumB.Y());
+                    hQvsM_X[1][0]->Fill(Mtof+Mrpc,vsumCorr.X()); 
+                    hQvsM_Y[1][0]->Fill(Mtof+Mrpc,vsumCorr.Y()); 
+                    hQvFW_X[1][0]->Fill(nFWspect ,vsumCorr.X()); 
+                    hQvFW_Y[1][0]->Fill(nFWspect ,vsumCorr.Y()); 
                 }
             }
             for (Int_t im=0;im<11;im++){
