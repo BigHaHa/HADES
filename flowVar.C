@@ -199,6 +199,6 @@
   Bool_t pidFlag=kFALSE;
   Float_t Ntrack;
   Float_t wmod=0., wmodA=0.,wmodB=0.;
-  Float_t Qxmean[215],Qymean[215],Qxsigm[215],Qysigm[215];
-  Float_t mQxFW[100],mQyFW[100],sQxFW[100],sQyFW[100];
+  Float_t Qxmean[215][3],Qymean[215][3],Qxsigm[215][3],Qysigm[215][3];
+  Float_t mQxFW[100][3],mQyFW[100][3],sQxFW[100][3],sQyFW[100][3];
   Float_t mQx, mQy;

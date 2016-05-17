@@ -395,8 +395,8 @@ Int_t flowCount(TString inputlist, TString outfile, Int_t nev=-1)
             if((Mtof+Mrpc)>=Mrang[im] && (Mtof+Mrpc)<Mrang[im+1]){
                 //vsumCorr = cellsVect.Recenter(vsum,sumXmean[0][im][DAY_NUM-96],sumYmean[0][im][DAY_NUM-96],sumXsigma[0][im][DAY_NUM-96],sumYsigma[0][im][DAY_NUM-96]);
                 //vsumRec  = cellsVect.Recenter(vsum,sumXmean[0][im][DAY_NUM-96],sumYmean[0][im][DAY_NUM-96]);
-                vsumCorr   = cellsVect.Recenter(vsum,mQxFW[nFWspect]            ,mQyFW[nFWspect]            );
-                if( (Mtof+Mrpc)>=20 && (Mtof+Mrpc)< 215 ) vsumMETA = cellsVect.Recenter(vsum,Qxmean[Mtof+Mrpc],Qymean[Mtof+Mrpc]);
+                vsumCorr   = cellsVect.Recenter(vsum,mQxFW[nFWspect][0]       ,mQyFW[nFWspect][0]         );
+                //if( (Mtof+Mrpc)>=20 && (Mtof+Mrpc)< 215 ) vsumMETA = cellsVect.Recenter(vsum,Qxmean[Mtof+Mrpc][0],Qymean[Mtof+Mrpc][0]);
                 //cout << "ev = " << i << " | QxR = " << vsumFW.X() << "; QyR = " << vsumFW.Y() << ";" << endl; 
             }
         }
@@ -450,10 +450,10 @@ Int_t flowCount(TString inputlist, TString outfile, Int_t nev=-1)
         vsumB /= wmodB;
         for (Int_t im=0;im<11;im++){
             if((Mtof+Mrpc)>=Mrang[im] && (Mtof+Mrpc)<Mrang[im+1]){
-                vsumCorrA = cellsVect.Recenter(vsumA,sumXmean[1][im][DAY_NUM-96],sumYmean[1][im][DAY_NUM-96],sumXsigma[1][im][DAY_NUM-96],sumYsigma[1][im][DAY_NUM-96]);
-                vsumCorrB = cellsVect.Recenter(vsumB,sumXmean[2][im][DAY_NUM-96],sumYmean[2][im][DAY_NUM-96],sumXsigma[2][im][DAY_NUM-96],sumYsigma[2][im][DAY_NUM-96]);
-                vsumRecA.Set(vsumCorrA.X()*sumXsigma[1][im][DAY_NUM-96],vsumCorrA.Y()*sumYsigma[1][im][DAY_NUM-96]);
-                vsumRecA.Set(vsumCorrA.X()*sumXsigma[2][im][DAY_NUM-96],vsumCorrA.Y()*sumYsigma[2][im][DAY_NUM-96]);
+                vsumCorrA = cellsVect.Recenter(vsumA,mQxFW[nFWspect][1],mQyFW[nFWspect][1]);
+                vsumCorrB = cellsVect.Recenter(vsumB,mQxFW[nFWspect][2],mQyFW[nFWspect][2]);
+                //vsumRecA.Set(vsumCorrA.X()*sumXsigma[1][im][DAY_NUM-96],vsumCorrA.Y()*sumYsigma[1][im][DAY_NUM-96]);
+                //vsumRecA.Set(vsumCorrA.X()*sumXsigma[2][im][DAY_NUM-96],vsumCorrA.Y()*sumYsigma[2][im][DAY_NUM-96]);
             }
         }
         phiA    = vsumA.DeltaPhi(eX)            *rad2deg;
@@ -522,7 +522,15 @@ Int_t flowCount(TString inputlist, TString outfile, Int_t nev=-1)
                     hQvsM_X[1][0]->Fill(Mtof+Mrpc,vsumCorr.X()); 
                     hQvsM_Y[1][0]->Fill(Mtof+Mrpc,vsumCorr.Y()); 
                     hQvFW_X[1][0]->Fill(nFWspect ,vsumCorr.X()); 
-                    hQvFW_Y[1][0]->Fill(nFWspect ,vsumCorr.Y()); 
+                    hQvFW_Y[1][0]->Fill(nFWspect ,vsumCorr.Y());
+                    hQvsM_X[1][1]->Fill(Mtof+Mrpc,vsumCorrA.X()); 
+                    hQvsM_Y[1][1]->Fill(Mtof+Mrpc,vsumCorrA.Y()); 
+                    hQvFW_X[1][1]->Fill(nFWspect ,vsumCorrA.X()); 
+                    hQvFW_Y[1][1]->Fill(nFWspect ,vsumCorrA.Y());
+                    hQvsM_X[1][2]->Fill(Mtof+Mrpc,vsumCorrB.X()); 
+                    hQvsM_Y[1][2]->Fill(Mtof+Mrpc,vsumCorrB.Y()); 
+                    hQvFW_X[1][2]->Fill(nFWspect ,vsumCorrB.X()); 
+                    hQvFW_Y[1][2]->Fill(nFWspect ,vsumCorrB.Y());   
                 }
             }
             for (Int_t im=0;im<11;im++){
