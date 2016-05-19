@@ -157,10 +157,10 @@ TProfile* CosPsi_FW[    3][2][2];
 TProfile* SinPsi_FW[    3][2][2];
 for (Int_t iT=0;iT<3;iT++){
     for(Int_t n=0; n<2; n++){
-        CosPsiAB_META[iT][n] = new TProfile(Form("CosPsiAB_META%i%i",iT,n),Form("CosPsiAB_META %i %i",iT,n),300,0.,300.);
-        SinPsiAB_META[iT][n] = new TProfile(Form("SinPsiAB_META%i%i",iT,n),Form("SinPsiAB_META %i %i",iT,n),300,0.,300.);
-        CosPsiAB_FW[  iT][n] = new TProfile(Form("CosPsiAB_FW%i%i"  ,iT,n),Form("CosPsiAB_FW %i %i"  ,iT,n),120,0.,120.);
-        SinPsiAB_FW[  iT][n] = new TProfile(Form("SinPsiAB_FW%i%i"  ,iT,n),Form("SinPsiAB_FW %i %i"  ,iT,n),120,0.,120.);
+        CosPsiAB_META[iT][n]      = new TProfile(Form("CosPsiAB_META%i%i",iT,n),Form("CosPsiAB_META %i %i",iT,n),300,0.,300.);
+        SinPsiAB_META[iT][n]      = new TProfile(Form("SinPsiAB_META%i%i",iT,n),Form("SinPsiAB_META %i %i",iT,n),300,0.,300.);
+        CosPsiAB_FW[  iT][n]      = new TProfile(Form("CosPsiAB_FW%i%i"  ,iT,n),Form("CosPsiAB_FW %i %i"  ,iT,n),120,0.,120.);
+        SinPsiAB_FW[  iT][n]      = new TProfile(Form("SinPsiAB_FW%i%i"  ,iT,n),Form("SinPsiAB_FW %i %i"  ,iT,n),120,0.,120.);
         for (Int_t k=0;k<2;k++){
             CosPsi_META[iT][n][k] = new TProfile(Form("CosPsi_META%i%i%i",iT,n,k),Form("CosPsi_META %i %i %i",iT,n,k),300,0.,300.);
             SinPsi_META[iT][n][k] = new TProfile(Form("SinPsi_META%i%i%i",iT,n,k),Form("SinPsi_META %i %i %i",iT,n,k),300,0.,300.);
@@ -172,3 +172,6 @@ for (Int_t iT=0;iT<3;iT++){
 TH2F*     hMETAvsCent = new TH2F("hMETAvsCent","hMETAvsCent",12 ,1.,12. ,300,0.,300.);
 TH2F*     hFWvsCent   = new TH2F("hFWvsCent"  ,"hFWvsCent"  ,12 ,1.,12. ,120,0.,120.);
 TH2F*     hMETAvsFW   = new TH2F("hMETAvsFW"  ,"hMETAvsFW"  ,120,0.,120.,300,0.,300.);
+
+TH2F*     hAccept     = new TH2F("hAccept" ,"Acceptance"        ,100,-3.,3.,100,0.,1.5);
+TH2F*     hAcceptP    = new TH2F("hAcceptP","Acceptance protons",100,-3.,3.,100,0.,1.5);

@@ -552,6 +552,7 @@ Int_t flowCount(TString inputlist, TString outfile, Int_t nev=-1)
                     for (Int_t n=0;n<6;n++){
                         cellsVect.SetFlatt(n,FlatSin[2][n][im][DAY_NUM-96],FlatCos[2][n][im][DAY_NUM-96]);
                     }
+                    cellsVect.SetNharm(6);
                     PsiB = cellsVect.Flattening(phiCorB);
                     if (PsiB > 180. ) PsiB-=180.;
                     if (PsiB < -180.) PsiB+=180.;
@@ -717,6 +718,8 @@ Int_t flowCount(TString inputlist, TString outfile, Int_t nev=-1)
             hChi2       ->Fill(chi2);
             pt0       = mom*sin(theta*hpi/90.); //uncorrected pt
             y0        = (0.5*log((1+beta*cos(theta*hpi/90.))/(1-beta*cos(theta*hpi/90.)))-Ycm)/Ycm; //uncorrected Yo
+            rapidity  = y0*Ycm;
+            hAccept  -> Fill(rapidity,pt0/1e3);
             for(Int_t i=0;i<11-4;i++){
                 for(Int_t j=0;j<9;j++){
                     for(Int_t k=0;k<18-5;k++){
@@ -739,6 +742,7 @@ Int_t flowCount(TString inputlist, TString outfile, Int_t nev=-1)
                 PCYn        = PCY/(2.*Ycm); //normalized to projectile rapidity Y/Yproj
                 PCYo        = (PCY-Ycm)/Ycm; //normalized to projectile rapidity (Y(cm)/Yproj(cm))
                 PCpt        = PCp*sin(theta*hpi/90.); //corrected pt
+                hAcceptP    ->Fill((PCY-Ycm),PCpt/1e3);
                 hPCpt       ->Fill(PCpt);
                 hpt0        ->Fill( pt0);
                 //---get-track-efficiency-------//

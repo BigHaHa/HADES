@@ -577,7 +577,7 @@ public:
             //line->DrawLine(0.,1.,300.,1.);
         
             p[0]->cd();
-            TLegend *leg = new TLegend(0.17,0.65,0.36,0.81);
+            TLegend *leg = new TLegend(0.68,0.65,0.87,0.81);
             leg->AddEntry(h1,legh1.Data(),"l");
             leg->AddEntry(h2,legh2.Data(),"l");
             leg->AddEntry(h3,legh3.Data(),"l");
@@ -619,7 +619,7 @@ public:
             h2->Draw("e1same");
             h3->Draw("e1same");
         
-            TLegend *leg = new TLegend(0.17,0.65,0.36,0.81);
+            TLegend *leg = new TLegend(0.68,0.65,0.87,0.81);
             leg->AddEntry(h1,legh1.Data(),"l");
             leg->AddEntry(h2,legh2.Data(),"l");
             leg->AddEntry(h3,legh3.Data(),"l");
@@ -743,7 +743,7 @@ public:
             //line->DrawLine(0.,1.,300.,1.);
         
             p[0]->cd();
-            TLegend *leg = new TLegend(0.17,0.65,0.36,0.81);
+            TLegend *leg = new TLegend(0.68,0.65,0.87,0.81);
             leg->AddEntry(h1,legh1.Data(),"l");
             leg->AddEntry(h2,legh2.Data(),"l");
             leg->AddEntry(h3,legh3.Data(),"l");
@@ -787,7 +787,7 @@ public:
             h2->Draw("e1same");
             h3->Draw("e1same");
         
-            TLegend *leg = new TLegend(0.17,0.65,0.36,0.81);
+            TLegend *leg = new TLegend(0.68,0.65,0.87,0.81);
             leg->AddEntry(h1,legh1.Data(),"l");
             leg->AddEntry(h2,legh2.Data(),"l");
             leg->AddEntry(h3,legh3.Data(),"l");

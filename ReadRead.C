@@ -79,18 +79,18 @@
     canv->SaveAs(Form("/home/peter/Documents/WorkLocal/WorkFiles/HADES/pionflow/anaflow/Results/Resolution/CosPsiAB_META.png"),"recreate");
     canv = p.makePlot(SinPsiAB[0][0][0],"Raw",SinPsiAB[0][1][0],"Recentered",SinPsiAB[0][2][0],"Flattened","TOF+RPC","<sin(#varphi_{A}-#varphi_{B})>","S");
     canv->SaveAs(Form("/home/peter/Documents/WorkLocal/WorkFiles/HADES/pionflow/anaflow/Results/Resolution/SinPsiAB_META.png"),"recreate");
-    canv = p.makePlot(CosPsiAB[1][0][0],"Raw",CosPsiAB[1][1][0],"Recentered",CosPsiAB[1][2][0],"Flattened","FW"     ,"<cos(#varphi_{A}-#varphi_{B})>","S");
+    canv = p.makePlot(CosPsiAB[1][0][0],"Raw",CosPsiAB[1][1][0],"Recentered",CosPsiAB[1][2][0],"Flattened","FW"     ,"<cos(#varphi_{A}-#varphi_{B})>",0.,120.,-0.01,0.01,"S");
     canv->SaveAs(Form("/home/peter/Documents/WorkLocal/WorkFiles/HADES/pionflow/anaflow/Results/Resolution/CosPsiAB_FW.png"),"recreate");
-    canv = p.makePlot(SinPsiAB[1][0][0],"Raw",SinPsiAB[1][1][0],"Recentered",SinPsiAB[1][2][0],"Flattened","FW"     ,"<sin(#varphi_{A}-#varphi_{B})>","S");
+    canv = p.makePlot(SinPsiAB[1][0][0],"Raw",SinPsiAB[1][1][0],"Recentered",SinPsiAB[1][2][0],"Flattened","FW"     ,"<sin(#varphi_{A}-#varphi_{B})>",0.,120.,-0.01,0.01,"S");
     canv->SaveAs(Form("/home/peter/Documents/WorkLocal/WorkFiles/HADES/pionflow/anaflow/Results/Resolution/SinPsiAB_FW.png"),"recreate");
 
     canv = p.makePlot(CosPsiAB[0][0][1],"Raw",CosPsiAB[0][1][1],"Recentered",CosPsiAB[0][2][1],"Flattened","TOF+RPC","<cos(2(#varphi_{A}-#varphi_{B}))>","S");
     canv->SaveAs(Form("/home/peter/Documents/WorkLocal/WorkFiles/HADES/pionflow/anaflow/Results/Resolution/CosPsi2AB_META.png"),"recreate");
     canv = p.makePlot(SinPsiAB[0][0][1],"Raw",SinPsiAB[0][1][1],"Recentered",SinPsiAB[0][2][1],"Flattened","TOF+RPC","<sin(2(#varphi_{A}-#varphi_{B}))>","S");
     canv->SaveAs(Form("/home/peter/Documents/WorkLocal/WorkFiles/HADES/pionflow/anaflow/Results/Resolution/SinPsi2AB_META.png"),"recreate");
-    canv = p.makePlot(CosPsiAB[1][0][1],"Raw",CosPsiAB[1][1][1],"Recentered",CosPsiAB[1][2][1],"Flattened","FW"     ,"<cos(2(#varphi_{A}-#varphi_{B}))>","S");
+    canv = p.makePlot(CosPsiAB[1][0][1],"Raw",CosPsiAB[1][1][1],"Recentered",CosPsiAB[1][2][1],"Flattened","FW"     ,"<cos(2(#varphi_{A}-#varphi_{B}))>",0.,120.,-0.01,0.01,"S");
     canv->SaveAs(Form("/home/peter/Documents/WorkLocal/WorkFiles/HADES/pionflow/anaflow/Results/Resolution/CosPsi2AB_FW.png"),"recreate");
-    canv = p.makePlot(SinPsiAB[1][0][1],"Raw",SinPsiAB[1][1][1],"Recentered",SinPsiAB[1][2][1],"Flattened","FW"     ,"<sin(2(#varphi_{A}-#varphi_{B}))>","S");
+    canv = p.makePlot(SinPsiAB[1][0][1],"Raw",SinPsiAB[1][1][1],"Recentered",SinPsiAB[1][2][1],"Flattened","FW"     ,"<sin(2(#varphi_{A}-#varphi_{B}))>",0.,120.,-0.01,0.01,"S");
     canv->SaveAs(Form("/home/peter/Documents/WorkLocal/WorkFiles/HADES/pionflow/anaflow/Results/Resolution/SinPsi2AB_FW.png"),"recreate");
     
     //---------------------------------------------------------------------------------------------------------------------------------------------------------//
@@ -131,13 +131,13 @@
     canv = p.makePlot(SinPsi[0][0][0][1],"Raw",SinPsi[0][1][0][1],"Recentered",SinPsi[0][2][0][1],"Flattened","TOF+RPC","<sin(#varphi_{B})>","S");
     canv->SaveAs(Form("/home/peter/Documents/WorkLocal/WorkFiles/HADES/pionflow/anaflow/Results/Resolution/SinPsiB_META.png"),"recreate");
 
-    canv = p.makePlot(CosPsi[1][0][0][0],"Raw",CosPsi[1][1][0][0],"Recentered",CosPsi[1][2][0][0],"Flattened","FW"     ,"<cos(#varphi_{A})>","S");
+    canv = p.makePlot(CosPsi[1][0][0][0],"Raw",CosPsi[1][1][0][0],"Recentered",CosPsi[1][2][0][0],"Flattened","FW"     ,"<cos(#varphi_{A})>",0.,120.,-0.05,0.05,"S");
     canv->SaveAs(Form("/home/peter/Documents/WorkLocal/WorkFiles/HADES/pionflow/anaflow/Results/Resolution/CosPsiA_FW.png"),"recreate");
-    canv = p.makePlot(CosPsi[1][0][0][1],"Raw",CosPsi[1][1][0][1],"Recentered",CosPsi[1][2][0][1],"Flattened","FW"     ,"<cos(#varphi_{B})>","S");
+    canv = p.makePlot(CosPsi[1][0][0][1],"Raw",CosPsi[1][1][0][1],"Recentered",CosPsi[1][2][0][1],"Flattened","FW"     ,"<cos(#varphi_{B})>",0.,120.,-0.05,0.05,"S");
     canv->SaveAs(Form("/home/peter/Documents/WorkLocal/WorkFiles/HADES/pionflow/anaflow/Results/Resolution/CosPsiB_FW.png"),"recreate");
-    canv = p.makePlot(SinPsi[1][0][0][0],"Raw",SinPsi[1][1][0][0],"Recentered",SinPsi[1][2][0][0],"Flattened","FW"     ,"<sin(#varphi_{A})>","S");
+    canv = p.makePlot(SinPsi[1][0][0][0],"Raw",SinPsi[1][1][0][0],"Recentered",SinPsi[1][2][0][0],"Flattened","FW"     ,"<sin(#varphi_{A})>",0.,120.,-0.05,0.05,"S");
     canv->SaveAs(Form("/home/peter/Documents/WorkLocal/WorkFiles/HADES/pionflow/anaflow/Results/Resolution/SinPsiA_FW.png"),"recreate");
-    canv = p.makePlot(SinPsi[1][0][0][1],"Raw",SinPsi[1][1][0][1],"Recentered",SinPsi[1][2][0][1],"Flattened","FW"     ,"<sin(#varphi_{B})>","S");
+    canv = p.makePlot(SinPsi[1][0][0][1],"Raw",SinPsi[1][1][0][1],"Recentered",SinPsi[1][2][0][1],"Flattened","FW"     ,"<sin(#varphi_{B})>",0.,120.,-0.05,0.05,"S");
     canv->SaveAs(Form("/home/peter/Documents/WorkLocal/WorkFiles/HADES/pionflow/anaflow/Results/Resolution/SinPsiB_FW.png"),"recreate");
 
 
@@ -150,13 +150,13 @@
     canv = p.makePlot(SinPsi[0][0][1][1],"Raw",SinPsi[0][1][1][1],"Recentered",SinPsi[0][2][1][1],"Flattened","TOF+RPC","<sin(2#varphi_{B})>","S");
     canv->SaveAs(Form("/home/peter/Documents/WorkLocal/WorkFiles/HADES/pionflow/anaflow/Results/Resolution/Sin2PsiB_META.png"),"recreate");
 
-    canv = p.makePlot(CosPsi[1][0][1][0],"Raw",CosPsi[1][1][1][0],"Recentered",CosPsi[1][2][1][0],"Flattened","FW"     ,"<cos(2#varphi_{A})>","S");
+    canv = p.makePlot(CosPsi[1][0][1][0],"Raw",CosPsi[1][1][1][0],"Recentered",CosPsi[1][2][1][0],"Flattened","FW"     ,"<cos(2#varphi_{A})>",0.,120.,-0.05,0.05,"S");
     canv->SaveAs(Form("/home/peter/Documents/WorkLocal/WorkFiles/HADES/pionflow/anaflow/Results/Resolution/Cos2PsiA_FW.png"),"recreate");
-    canv = p.makePlot(CosPsi[1][0][1][1],"Raw",CosPsi[1][1][1][1],"Recentered",CosPsi[1][2][1][1],"Flattened","FW"     ,"<cos(2#varphi_{B})>","S");
+    canv = p.makePlot(CosPsi[1][0][1][1],"Raw",CosPsi[1][1][1][1],"Recentered",CosPsi[1][2][1][1],"Flattened","FW"     ,"<cos(2#varphi_{B})>",0.,120.,-0.05,0.05,"S");
     canv->SaveAs(Form("/home/peter/Documents/WorkLocal/WorkFiles/HADES/pionflow/anaflow/Results/Resolution/Cos2PsiB_FW.png"),"recreate");
-    canv = p.makePlot(SinPsi[1][0][1][0],"Raw",SinPsi[1][1][1][0],"Recentered",SinPsi[1][2][1][0],"Flattened","FW"     ,"<sin(2#varphi_{A})>","S");
+    canv = p.makePlot(SinPsi[1][0][1][0],"Raw",SinPsi[1][1][1][0],"Recentered",SinPsi[1][2][1][0],"Flattened","FW"     ,"<sin(2#varphi_{A})>",0.,120.,-0.05,0.05,"S");
     canv->SaveAs(Form("/home/peter/Documents/WorkLocal/WorkFiles/HADES/pionflow/anaflow/Results/Resolution/Sin2PsiA_FW.png"),"recreate");
-    canv = p.makePlot(SinPsi[1][0][1][1],"Raw",SinPsi[1][1][1][1],"Recentered",SinPsi[1][2][1][1],"Flattened","FW"     ,"<sin(2#varphi_{B})>","S");
+    canv = p.makePlot(SinPsi[1][0][1][1],"Raw",SinPsi[1][1][1][1],"Recentered",SinPsi[1][2][1][1],"Flattened","FW"     ,"<sin(2#varphi_{B})>",0.,120.,-0.05,0.05,"S");
     canv->SaveAs(Form("/home/peter/Documents/WorkLocal/WorkFiles/HADES/pionflow/anaflow/Results/Resolution/Sin2PsiB_FW.png"),"recreate");
     
     //---------------------------------------------------------------------------------------------------------------------------------------------------------//
