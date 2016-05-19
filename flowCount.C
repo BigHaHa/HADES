@@ -400,10 +400,10 @@ Int_t flowCount(TString inputlist, TString outfile, Int_t nev=-1)
                 //cout << "ev = " << i << " | QxR = " << vsumFW.X() << "; QyR = " << vsumFW.Y() << ";" << endl; 
             }
         }
-        VectphiEP =  vsum.DeltaPhi(eX)    *rad2deg;
-        VectphiEPr=  vsum.DeltaPhi(eX); //radians
-        VectphiCorr= vsumCorr.DeltaPhi(eX)*rad2deg;
-        VectphiCorrR= vsumCorr.DeltaPhi(eX);//radians
+        VectphiEP   = vsum.DeltaPhi(eX)      *rad2deg;
+        VectphiEPr  = vsum.DeltaPhi(eX);     //radians
+        VectphiCorr = vsumCorr.DeltaPhi(eX)  *rad2deg;
+        VectphiCorrR= vsumCorr.DeltaPhi(eX); //radians
         hPhiEPvect->Fill(VectphiEP);
         //-now-we-go-over-spectators-and-make-calculations-for-A/B-subevents
         NA=0;
@@ -466,13 +466,13 @@ Int_t flowCount(TString inputlist, TString outfile, Int_t nev=-1)
         if (Mfw > 3 && NA>1 && NB>1){
             for (Int_t im=0;im<11;im++){
                 if((Mtof+Mrpc)>=Mrang[im] && (Mtof+Mrpc)<Mrang[im+1]){
-                    hQvectX[0][im]->Fill(vsum.X());          hQvectY[0][im]->Fill(vsum.Y());
-                    hQvXrec[0][im]->Fill(vsumCorr.X());      hQvYrec[0][im]->Fill(vsumCorr.Y());
-                    hQvectX[1][im]->Fill(vsumA.X());         hQvectY[1][im]->Fill(vsumA.Y());
-                    hQvXrec[1][im]->Fill(vsumCorrA.X());     hQvYrec[1][im]->Fill(vsumCorrA.Y());
-                    hQvectX[2][im]->Fill(vsumB.X());         hQvectY[2][im]->Fill(vsumB.Y());
-                    hQvXrec[2][im]->Fill(vsumCorrB.X());     hQvYrec[2][im]->Fill(vsumCorrB.Y());
-                    hQvRaw[0][ im]->Fill(vsum.X(),vsum.Y()); hQvRec[0][ im]->Fill(vsumCorr.X(),vsumCorr.Y());
+                    hQvectX[0][im]->Fill(vsum.X());            hQvectY[0][im]->Fill(vsum.Y());
+                    hQvXrec[0][im]->Fill(vsumCorr.X());        hQvYrec[0][im]->Fill(vsumCorr.Y());
+                    hQvectX[1][im]->Fill(vsumA.X());           hQvectY[1][im]->Fill(vsumA.Y());
+                    hQvXrec[1][im]->Fill(vsumCorrA.X());       hQvYrec[1][im]->Fill(vsumCorrA.Y());
+                    hQvectX[2][im]->Fill(vsumB.X());           hQvectY[2][im]->Fill(vsumB.Y());
+                    hQvXrec[2][im]->Fill(vsumCorrB.X());       hQvYrec[2][im]->Fill(vsumCorrB.Y());
+                    hQvRaw[0][ im]->Fill(vsum.X(),vsum.Y());   hQvRec[0][ im]->Fill(vsumCorr.X(),vsumCorr.Y());
                     hQvRaw[1][ im]->Fill(vsumA.X(),vsumA.Y()); hQvRec[1][ im]->Fill(vsumCorrA.X(),vsumCorrA.Y());
                     hQvRaw[2][ im]->Fill(vsumB.X(),vsumB.Y()); hQvRec[2][ im]->Fill(vsumCorrB.X(),vsumCorrB.Y());
                 }
@@ -728,19 +728,19 @@ Int_t flowCount(TString inputlist, TString outfile, Int_t nev=-1)
             }
             if (p.fPID(14, mom,beta,charge)){ hbetaMomPro->Fill(mom*charge,beta); /*pidFlag == kTRUE;*/ }
             if ( mass>600 && mass<1250 && NA>0 && NB>0 && charge>0 && metaQa<5 && chi2<200. && chi2In>0.1 && chi2In<12. && chi2Out>0.1 && chi2Out<12. && sec>=0 && sec<=5 && mdcdEdx>fdEdxVsMomLowLimit(mom)){
-                hphiPro ->Fill(phi);
-                hMom    ->Fill(mom*charge);
-                hMomCorr->Fill(charge*momCorPar->getCorrMom(14,mom,theta));
-                PCp       = pParticleCand->getCorrectedMomentumPID(14);
-                hMomCorrPID->Fill(charge*PCp);
-                PCpz      = PCp*cos(theta*hpi/90.);
-                PCE       = sqrt(mass2Pro + PCp*PCp        );
-                PCY       = 0.5*(log((PCE+PCpz)/(PCE-PCpz))); //corrected rapidity for protons
-                PCYn      = PCY/(2.*Ycm); //normalized to projectile rapidity Y/Yproj
-                PCYo      = (PCY-Ycm)/Ycm; //normalized to projectile rapidity (Y(cm)/Yproj(cm))
-                PCpt      = PCp*sin(theta*hpi/90.); //corrected pt
-                hPCpt->Fill(PCpt);
-                hpt0 ->Fill( pt0);
+                hphiPro     ->Fill(phi);
+                hMom        ->Fill(mom*charge);
+                hMomCorr    ->Fill(charge*momCorPar->getCorrMom(14,mom,theta));
+                PCp         = pParticleCand->getCorrectedMomentumPID(14);
+                hMomCorrPID ->Fill(charge*PCp);
+                PCpz        = PCp*cos(theta*hpi/90.);
+                PCE         = sqrt(mass2Pro + PCp*PCp        );
+                PCY         = 0.5*(log((PCE+PCpz)/(PCE-PCpz))); //corrected rapidity for protons
+                PCYn        = PCY/(2.*Ycm); //normalized to projectile rapidity Y/Yproj
+                PCYo        = (PCY-Ycm)/Ycm; //normalized to projectile rapidity (Y(cm)/Yproj(cm))
+                PCpt        = PCp*sin(theta*hpi/90.); //corrected pt
+                hPCpt       ->Fill(PCpt);
+                hpt0        ->Fill( pt0);
                 //---get-track-efficiency-------//
                 binX      =   hProtPtVsY_Eff->GetXaxis()->FindBin((Double_t) PCY );  //-Pt:Y-correction--
                 binY      =   hProtPtVsY_Eff->GetYaxis()->FindBin((Double_t) PCpt);  //-Pt:Y-correction--

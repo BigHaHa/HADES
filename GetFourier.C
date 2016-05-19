@@ -37,12 +37,13 @@
         for(Int_t n=0;n<6;n++){
             hCnCent[i][n] = new TH1F(Form("hCnCent%i%i",i,n),Form("C_{%i} vs Centrality %i",n+1,i+1),11,1.,12.);
             hCnCent[i][n]->SetLineColor(color[i]);
+            hCnCent[i][n]->SetMarkerStyle(21);
+            hCnCent[i][n]->SetMarkerColor(color[i]);
         }
     }
 
     TF1 flows("flows", "[6]*( 1.+2.*[0]*TMath::Cos(x[0]*3.1415926535/180.)+2.*[1]*TMath::Cos(2.*x[0]*3.1415926535/180.)+2.*[2]*TMath::Cos(3.*x[0]*3.1415926535/180.)+2.*[3]*TMath::Cos(4.*x[0]*3.1415926535/180.) + [4]*TMath::Cos(5.*x[0]*3.1415/180.) + [5]*TMath::Cos(6.*x[0]*3.1415/180.) + [7]*TMath::Sin(x[0]*3.1415/180.) + [8]*TMath::Sin(2.*x[0]*3.1415/180.) )", -180., 180.);
     
-    FILE* output = fopen("Fourier.txt","wt");
     //--reading-flow-histograms-from-ROOT-file-------------(begin)----
     TKey *key; 
     while( (key = (TKey*)next()) ){ 
@@ -51,23 +52,23 @@
         if ( obj->IsA()->InheritsFrom( TH1::Class() ) ) {
         	TH1 *h = (TH1*)obj;
         	Char_t ch1[1024], ch2[1024];
-            Int_t iC;
-            sscanf(key->GetTitle(), "%s %i %s "    , ch1, &iC, ch2);
+            Int_t iC1,iC2;
+            sscanf(key->GetTitle(), "%s %i %i "    , ch1, &iC1, &iC2);
             TString s(key->GetName());
-            if( s.Contains("hPsiEP") ){
-            	printf("[EP]-EP--------%s[%i]--->\n",ch1,iC);
-                hEPyc[iC] = new TH1F;
-                hEPyc[iC] = (TH1F*)obj;
+            if( s.Contains("hPsiEP") && iC1==0 ){
+            	printf("[EP]-EP--------%s[%i][%i]--->\n",ch1,iC1,iC2);
+                hEPyc[iC2] = new TH1F;
+                hEPyc[iC2] = (TH1F*)obj;
             }
-            if( s.Contains("hPsiRcnt") ){
-            	printf("[EP]-Recent----%s[%i]--->\n",ch1,iC);
-                hEPyr[iC] = new TH1F;
-                hEPyr[iC] = (TH1F*)obj;
+            if( s.Contains("hPsiRcnt") && iC1==0 ){
+            	printf("[EP]-Recent----%s[%i][%i]--->\n",ch1,iC1,iC2);
+                hEPyr[iC2] = new TH1F;
+                hEPyr[iC2] = (TH1F*)obj;
             }
-            if( s.Contains("hPsiCorr") ){
-            	printf("[EP]-Corrected-%s[%i]--->\n",ch1,iC);
-                hOEPyc[iC] = new TH1F;
-                hOEPyc[iC] = (TH1F*)obj;
+            if( s.Contains("hPsiCorr") && iC1==0 ){
+            	printf("[EP]-Corrected-%s[%i][%i]--->\n",ch1,iC1,iC2);
+                hOEPyc[iC2] = new TH1F;
+                hOEPyc[iC2] = (TH1F*)obj;
             }
         }
     }
@@ -105,15 +106,12 @@
         hEPyc[im]->Draw();
         hOEPyc[im]->Draw("same");
         hEPyr[im]->Draw("same");
-        fprintf(output,"-------------EP----------------\n");
         if( summ > 0 ){ 
         	flows.SetLineColor(2);
         	hEPyc[im]->Fit("flows");
             for(Int_t i=0; i<6; i++){
                 vi[i] = flows->GetParameter(i);
                 ei[i] = flows->GetParError( i);
-                if(i==0) { fprintf(output,"[*]-N-Cent-[%i]\n", im); }
-                fprintf(output,"Fitted: v%i=%+5.6f +/- %5.6f;\n",i+1,vi[i],ei[i]);
                 sprintf(ds, "c%i=%+5.6f +/- %5.6f",i+1, vi[i], ei[i]);
                 //txt.DrawTextNDC(0.25, 0.36+0.05  , "META");
                 //txt.DrawTextNDC(0.15, 0.36-0.05*i, ds);
@@ -121,15 +119,12 @@
                 hCnCent[0][i]->SetBinError(  im+1,ei[i]);
             }
         }
-        fprintf(output,"----------Recentering----------\n");
         if( hEPyr[im]->GetSumOfWeights() > 0 ){
             flows.SetLineColor(8);
             hEPyr[im]->Fit("flows");
             for(Int_t i=0; i<6; i++){
                 vi[i] = flows->GetParameter(i);
                 ei[i] = flows->GetParError( i);
-                if(i==0) { fprintf(output,"[*]-N-Cent-[%i]\n", im); }
-                fprintf(output,"Fitted: v%i=%+5.4f +/- %5.4f;\n",i+1,vi[i],ei[i]);
                 sprintf(ds, "v%i=%+5.4f +/- %5.4f",i+1, vi[i], ei[i]);
                 //txt.DrawTextNDC(0.62, 0.36+0.05 , "MDC");
                 //txt.DrawTextNDC(0.5, 0.36-0.05*i, ds);
@@ -137,15 +132,12 @@
                 hCnCent[1][i]->SetBinError(  im+1,ei[i]);
             }
         }
-        fprintf(output,"----------Flattering-----------\n");
         if( hOEPyc[im]->GetSumOfWeights() > 0 ){
             flows.SetLineColor(9);
             hOEPyc[im]->Fit("flows");
             for(Int_t i=0; i<6; i++){
                 vi[i] = flows->GetParameter(i);
                 ei[i] = flows->GetParError( i);
-                if(i==0) { fprintf(output,"[*]-N-Cent-[%i]\n", im); }
-                fprintf(output,"Fitted: v%i=%+5.4f +/- %5.4f;\n",i+1,vi[i],ei[i]);
                 sprintf(ds, "v%i=%+5.4f +/- %5.4f",i+1, vi[i], ei[i]);
                 //txt.DrawTextNDC(0.62, 0.36+0.05 , "MDC");
                 //txt.DrawTextNDC(0.5, 0.36-0.05*i, ds);
@@ -213,15 +205,12 @@
         //if (im  > 3) hEPyc[im]->GetYaxis()->SetRangeUser(0.,1e5);
         hEPyc[im]->Draw();
         //hOEPyc[im]->Draw("same");
-        fprintf(output,"-------------META--------------\n");
         if( summ > 0 ){ 
         	flows.SetLineColor(2);
         	hEPyc[im]->Fit("flows");
             for(Int_t i=0; i<6; i++){
                 vi[i] = flows->GetParameter(i);
                 ei[i] = flows->GetParError( i);
-                if(i==0) { fprintf(output,"[*]-N-Cent-[%i]\n", im); }
-                fprintf(output,"Fitted: v%i=%+5.6f +/- %5.6f;\n",i+1,vi[i],ei[i]);
                 sprintf(ds, "v%i=%+5.6f +/- %5.6f",i+1, vi[i], ei[i]);
                 //txt.SetTextSize(12);
                 txt.DrawTextNDC(0.25, 0.36+0.05  , "META");
@@ -234,8 +223,6 @@
             for(Int_t i=0; i<4; i++){
                 vi[i] = flows->GetParameter(i);
                 ei[i] = flows->GetParError( i);
-                if(i==0) { fprintf(output,"[*]-N-Cent-[%i]\n", im); }
-                fprintf(output,"Fitted: v%i=%+5.4f +/- %5.4f;\n",i+1,vi[i],ei[i]);
                 sprintf(ds, "v%i=%+5.4f +/- %5.4f",i+1, vi[i], ei[i]);
                 txt.DrawTextNDC(0.62, 0.33+0.05 , "MDC");
                 txt.DrawTextNDC(0.5, 0.33-0.05*i, ds);

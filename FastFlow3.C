@@ -146,12 +146,14 @@
             for(Int_t iC=0; iC<NCENT-4; iC++){
                 for(Int_t iY=0; iY<NYo; iY++){
                     for(Int_t iP=0; iP<NPt-5; iP++){
-                        if (iY>(NYo-1)/2 || i!=0) hvnPt[iF][i][iC][iY]->SetBinContent(iP+1, vsum[iF][i][iC][iY][iP]);
+                        if (iY>(NYo-1)/2 && i!=0) hvnPt[iF][i][iC][iY]->SetBinContent(iP+1,-vsum[iF][i][iC][iY][iP]);
+                        if (iY<(NYo-1)/2 && i!=0) hvnPt[iF][i][iC][iY]->SetBinContent(iP+1,-vsum[iF][i][iC][iY][iP]);
+                        if (iY>(NYo-1)/2 && i==0) hvnPt[iF][i][iC][iY]->SetBinContent(iP+1, vsum[iF][i][iC][iY][iP]);
                         if (iY>(NYo-1)/2 || i!=0) hvnPt[iF][i][iC][iY]->SetBinError(  iP+1, esum[iF][i][iC][iY][iP]);
                         if (iY<(NYo-1)/2 && i==0) hvnPt[iF][i][iC][iY]->SetBinContent(iP+1,-vsum[iF][i][iC][iY][iP]);
                         if (iY<(NYo-1)/2 && i==0) hvnPt[iF][i][iC][iY]->SetBinError(  iP+1, esum[iF][i][iC][iY][iP]);
                     }
-                    hvnPt[iF][i][iC][iY]->GetYaxis()->SetTitle(Form("v_{%i}",i+1));
+                    hvnPt[iF][i][iC][iY]->GetYaxis()->SetTitle(Form("-v_{%i}",i+1));
                     hvnPt[iF][i][iC][iY]->GetXaxis()->SetTitle(Form("p_{T}, GeV"));
                 }
             }
@@ -163,10 +165,11 @@
             for(Int_t iC=0; iC<NCENT-4; iC++){
                 for(Int_t iP=0; iP<NPt-5; iP++){
                     for(Int_t iY=0; iY<NYo; iY++){
-                        hvnYo[iF][i][iC][iP]->SetBinContent(iY+2,vsum[iF][i][iC][iY][iP]);
+                        if (i==1) hvnYo[iF][i][iC][iP]->SetBinContent(iY+2,-vsum[iF][i][iC][iY][iP]);
+                        if (i==0) hvnYo[iF][i][iC][iP]->SetBinContent(iY+2, vsum[iF][i][iC][iY][iP]);
                         hvnYo[iF][i][iC][iP]->SetBinError(  iY+2,esum[iF][i][iC][iY][iP]);
                     }
-                    hvnYo[iF][i][iC][iP]->GetYaxis()->SetTitle(Form("v_{%i}",i+1));
+                    hvnYo[iF][i][iC][iP]->GetYaxis()->SetTitle(Form("-v_{%i}",i+1));
                     hvnYo[iF][i][iC][iP]->GetXaxis()->SetTitle(Form("Y_{0}"));
                 }
             }
